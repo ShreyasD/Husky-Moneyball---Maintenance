@@ -1,0 +1,17 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+
+	<ion-view view-title="Activities">
+	  <ion-content>
+	    <ion-list>
+	      	<ion-item class="item-remove-animate card item-icon-right" ng-repeat="activity in activities" type="item-text-wrap" href="#/ActivityTracking/Activities/{{activity.Id}}">
+			    <h2>{{activity.Maintenance_Work_Order__r.Name}}</h2>
+			    <p><strong>{{activity.Name}}</strong></p>
+				<p><strong>{{activity.Status__c}}</strong></p>
+				<p>Scheduled:<strong>{{activity.Scheduled_Start_Date__c}}</strong></p>
+				<i class="icon ion-chevron-right icon-accessory"></i>
+			</ion-item>
+	    </ion-list>
+	  </ion-content>
+	</ion-view>
+	
+</apex:page>

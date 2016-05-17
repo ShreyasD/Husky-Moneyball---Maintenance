@@ -1,0 +1,10 @@
+list<HOG_Planner_Group_Notification_Type__c> result = [select id, name, Order_Type__c, Order_Type_Text__c from HOG_Planner_Group_Notification_Type__c];
+for(HOG_Planner_Group_Notification_Type__c rec: result)
+{
+    system.debug(rec.Order_Type__c);
+    String[] orderTypes = (rec.Order_Type__c != null) ? rec.Order_Type__c.split(';') : null;
+	
+	rec.Order_Type_Text__c =  (orderTypes != null && !orderTypes.isEmpty()) ? String.join(orderTypes, ',') : null;
+	system.debug(rec.Order_Type_Text__c);
+}
+update result;

@@ -1,0 +1,14 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<font face="arial" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">End of Job Report {!HOG_EOJ__c.Name}<span style="font-size: 12pt;">&nbsp;has been submitted by&nbsp;</span>{!HOG_EOJ__c.LastModifiedBy}</font><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><b>End Of Job Report Details:</b></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><b><br></b></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><b>Work Order #:&nbsp;</b><font face="arial">{!HOG_EOJ__c.Work_Order__c}</font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><div><b>Well Location:&nbsp;</b><font face="arial">{!HOG_EOJ__c.Well_Location_Name__c}</font></div><div><b style="color: rgb(0, 0, 0); font-family: arial;">Rig Program #:&nbsp;</b><font face="arial">{!HOG_EOJ__c.Service_Rig_Program__c}</font></div><div style="color: rgb(0, 0, 0); font-family: arial;"><b>Find the link for the End of Job report&nbsp;</b></div></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">{!HOG_EOJ__c.Link}</div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[]]></td>
+</tr>
+</table>

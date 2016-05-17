@@ -1,0 +1,187 @@
+<apex:page controller="VTT_TradesmanScheduleController" docType="html-5.0" cache="false" title="Tradesman Calendar" showHeader="true" sidebar="true">
+
+    <apex:includescript value="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" />
+	<apex:includescript value="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.js" />
+	<apex:includescript value="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.js" />
+	<apex:stylesheet value="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.css"/>  
+
+
+<apex:sectionHeader title="Activity Tracking" subtitle="Tradesman Calendar"/>
+
+
+
+
+<!-- Calendar is rendered here by the fullcalendar Javascript -->
+<apex:form > 
+    <apex:outputPanel id="adminPanel" rendered="{!Or(IsVendorSupervisor, IsAdmin)}">
+        <apex:pageBlock >
+            <apex:outputLabel for="VendorList" value="Vendor: " rendered="{!IsAdmin}"/>
+            <apex:selectList id="VendorList" value="{!AccountID}" size="1" label="Vendor" styleClass="form-control" rendered="{!IsAdmin}">
+                <apex:selectOptions value="{!VendorAccoountOptions}"/>
+                <apex:actionSupport event="onchange" action="{!LoadTradesmanList}" reRender="adminPanel,TradesmenList, theGrid, LogEntries, scriptpanel" />         
+            </apex:selectList>
+
+            <apex:outputLabel for="TradesmenList" value="Tradesman: "/>
+            <apex:selectList id="TradesmenList" value="{!TradesmanID}" size="1" label="Tradesman" styleClass="form-control">
+                <apex:selectOptions value="{!TradesmenOptions}"/>
+                <apex:actionSupport event="onchange" action="{!PageReload}"/>  
+                <!-- reRender="adminPanel,theGrid, LogEntries, scriptpanel" -->
+            </apex:selectList>
+            <apex:commandButton value="Reload" action="{!PageReload}"/>
+            <apex:commandButton value="Job In Progress" action="{!JobInProgress}" rendered="{!Tradesman.Current_Work_Order_Activity__c<> null}"/>   
+        </apex:pageBlock>
+    </apex:outputPanel>
+<apex:pageBlock >
+
+    <apex:pageBlockButtons rendered="{!AND(NOT(IsVendorSupervisor), NOT(IsAdmin))}" location="top">
+        <apex:commandButton value="Job In Progress" action="{!JobInProgress}" rendered="{!Tradesman.Current_Work_Order_Activity__c<> null}"/>
+    </apex:pageBlockButtons>
+
+    <div id="cal-legend">
+        <ul>
+            <li><span class="event-scheduled"></span>Scheduled</li>
+            <li><span class="event-activitylog"></span>Worked</li>
+            <li><span class="event-activitylog-complete"></span>Completed</li>
+            <li><span class="event-activitylog-err"></span>Stale</li>
+        </ul>
+        <div style="clear:both;"><!--fix floats--></div>
+    </div>
+
+    <apex:panelGrid columns="3" id="theGrid">
+        <div id='calendar'/>
+        <apex:actionFunction action="{!ReloadLogEntries}" name="ReloadLogEntries" rerender="LogEntries">
+                <apex:param name="firstParam" assignTo="{!CurrentDate}" value="" />
+         </apex:actionFunction>
+
+        <apex:outputPanel id="LogEntries">
+            
+            <apex:outputPanel >
+
+            <apex:pageBlock >
+                <apex:pageBlockSection collapsible="false" columns="2"  title="Activity Log for: {!CurrentDate}">
+                        <apex:outputLabel value="Total Time: "/>
+                        <apex:outputtext value="{!TotalHoursText}"/>
+                    
+                        <apex:outputLabel value="Total Time On Equipment: "/>
+                        <apex:outputtext value="{!TotalHoursOnEquipmentText}"/>
+
+                        <apex:outputLabel value="Total Time Off Equipment: "/>
+                        <apex:outputtext value="{!TotalHoursOffEquipmentText}"/>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+
+            <apex:pageBlock >
+            <apex:pageBlockTable rowClasses="odd,even" value="{!WorkOrderSummaryList}"
+ var="rec">
+                <apex:column headerValue="Hours">
+                    <apex:outputtext value="{0, number, 0.00}">
+                       <apex:param value="{!rec.Hours}"></apex:param>
+                    </apex:outputtext>
+                </apex:column>
+                <apex:column headerValue="Order" value="{!rec.WorkOrderName}"/>
+                <apex:column headerValue="Location" value="{!rec.LocationName}"/>
+<!--                 <apex:facet name="caption">Activity Log for: {!CurrentDate}</apex:facet> -->
+            </apex:pageBlockTable>
+            </apex:pageBlock>
+
+            <apex:pageBlock >
+            <apex:pageBlockTable rowClasses="odd,even" value="{!LogEntryList}"
+ var="rec">
+                <apex:column headerValue="Activity" value="{!rec.Work_Order_Activity__r.Name}"/>
+                <apex:column headerValue="Status" value="{!rec.Status__c}"/>
+                <apex:column headerValue="Time" value="{!rec.TimeStamp__c}"/>
+<!--                 <apex:column headerValue="Time">
+                <apex:outputText value="{0,date,HH:mm:ss}"> 
+                    <apex:param value="{!rec.TimeStamp__c}" /> 
+                </apex:outputText>
+                </apex:column> -->
+<!--                 <apex:column headerValue="Duration" value="{!rec.Duration_Text__c}"/>    -->             
+<!--                 <apex:facet name="caption">Activity Log for: {!CurrentDate}</apex:facet> -->
+<!--                 <apex:facet name="footer"> 
+                    <apex:outputtext value="Total Hours: {0, number, 0.00}">
+                        <apex:param value="{!TotalHours}"></apex:param>
+                    </apex:outputtext>                    
+                </apex:facet> -->
+            </apex:pageBlockTable>
+            </apex:pageBlock>
+            </apex:outputPanel>
+        </apex:outputPanel>
+        
+
+    </apex:panelGrid>    
+</apex:pageBlock>
+</apex:form>
+<apex:outputPanel id="scriptpanel"> 
+<script>
+    //We need to wrap everything in a doc.ready function so that the code fires after the DOM is loaded
+    j$ = jQuery.noConflict();
+
+    
+    //j$(document).on('ready page:load', function () {
+    j$(document).ready(function() {   
+        //Call the fullCallendar method. You can replace the '#calendar' with the ID of the dom element where you want the calendar to go. 
+        j$('#calendar').fullCalendar({
+
+            dayClick: function(date, jsEvent, view) {
+                //alert('Clicked on: ' + date.format());
+                //alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+                //alert('Current view: ' + view.name);
+                ReloadLogEntries(date.format());
+                // change the day's background color just for fun
+                //j$(this).css('background-color', 'red');
+            },
+
+
+            theme: false,
+            header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,agendaWeek,agendaDay'
+                    },
+            editable: false,
+            eventLimit: true,
+            events:
+            [
+                //At run time, this APEX Repeat will reneder the array elements for the events array
+                <apex:repeat value="{!events}" var="e">
+                    {
+                        title: "{!JSENCODE(e.title)}",
+                        start: '{!e.startString}',
+                        end: '{!e.endString}',
+                        url: '{!e.url}',
+                        allDay: {!e.allDay},
+                        className: '{!e.className}'
+                    },
+                </apex:repeat>
+            ]
+        });
+         
+    });
+</script>
+</apex:outputPanel>
+<!--some styling. Modify this to fit your needs-->
+<style>
+    #cal-options {float:left;}
+    #cal-legend { float:top;}
+    #cal-legend ul {margin:0;padding:0;list-style:none;}
+    #cal-legend ul li {margin:0;padding:5px;float:left;}
+    #cal-legend ul li span {display:block; height:16px; width:16px; margin-right:4px; float:left; border-radius:4px;}
+    #calendar {margin-top:20px;}
+    #calendar a:hover {color:#fff !important;}
+     
+    .fc-event-inner {padding:3px;}
+    .event-activitylog-err {background:red;border-color:red;}
+    .event-activitylog-complete {background:green;border-color:green;}    
+    .event-activitylog {background:#1797c0;border-color:#1797c0;}
+    .event-available {background:#56458c;border-color:#56458c;}
+    .event-scheduled {background:#cc9933;border-color:#cc9933;}
+
+    #calendar {
+            max-width: 900px;
+            max-hight: 400px;
+            margin: 0 auto;
+        }
+
+</style>
+
+</apex:page>

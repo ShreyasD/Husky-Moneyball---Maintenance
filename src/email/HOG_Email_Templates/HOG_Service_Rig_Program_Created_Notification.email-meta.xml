@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email Notification Template for email alert sent when new service rig program is created.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>HOG_Standard_Letter_Head</letterhead>
+    <name>HOG - Service Rig Program Created Notification</name>
+    <style>formalLetter</style>
+    <subject>Service Rig Request Notification</subject>
+    <textOnly>Attention
+
+New Service Rig Request created:
+Location Name: {!HOG_Service_Rig_Program__c.Well_Location__c}
+{!IF(HOG_Service_Rig_Program__c.H2S__c=&quot;Y&quot;,&quot;Hazardous H2S on site&quot;,&quot;&quot;)}
+Surface Location: {!HOG_Service_Rig_Program__c.Surface_Location__c}
+Operating Route: {!HOG_Service_Rig_Program__c.Operator_Route__c}
+Well Orientation: {!HOG_Service_Rig_Program__c.Well_Orientation__c}
+Service Type: {!HOG_Service_Rig_Program__c.Service_Type__c}
+5 Days Gas (m3): {!HOG_Service_Rig_Program__c.PVR_AVGVOL_5D_GAS__c}
+5 Days Oil(m3): {!HOG_Service_Rig_Program__c.PVR_AVGVOL_5D_OIL__c}
+5 Days Water (m3): {!HOG_Service_Rig_Program__c.PVR_AVGVOL_5D_WATER__c}
+5 Days Sand (m3): {!HOG_Service_Rig_Program__c.PVR_AVGVOL_5D_SAND__c}
+5 Days Condensate (m3): {!HOG_Service_Rig_Program__c.PVR_AVGVOL_5D_COND__c}
+5 Days Production (m3):{!HOG_Service_Rig_Program__c.PVR_AVGVOL_5D_PROD__c}
+5 Days Number Of Measures: {!HOG_Service_Rig_Program__c.PVR_AVGVOL_5D_NO_OF_MEASURES__c}
+5 Days Last Measured Date: {!HOG_Service_Rig_Program__c.PVR_AVGVOL_5D_LAST_MEASURED__c}
+Well Down Start Date: {!HOG_Service_Rig_Program__c.Well_Down_Date__c}
+Current Well Status: {!HOG_Service_Rig_Program__c.Current_Well_Status__c}
+Well Status Reason: {!HOG_Service_Rig_Program__c.Well_Status_Reason__c}
+Work Details: {!HOG_Service_Request_Notification_Form__c.Work_Details__c}
+
+Key Contacts
+
+Production Manager:{!HOG_Service_Rig_Program__c.Production_Manager__c}
+Production Engineer:{!HOG_Service_Rig_Program__c.Production_Engineer__c}
+Production Coordinator:{!HOG_Service_Rig_Program__c.Production_Coordinator__c}
+Field Senior: {!HOG_Service_Rig_Program__c.Field_Senior__c}
+Operations Coordinator:{!HOG_Service_Rig_Program__c.Operations_Coordinator__c}
+Service Rig Coordinator:{!HOG_Service_Rig_Program__c.Service_Rig_Coordinator__c}
+Service Rig Planner:{!HOG_Service_Rig_Program__c.Service_Rig_Planner__c}</textOnly>
+    <type>html</type>
+</EmailTemplate>

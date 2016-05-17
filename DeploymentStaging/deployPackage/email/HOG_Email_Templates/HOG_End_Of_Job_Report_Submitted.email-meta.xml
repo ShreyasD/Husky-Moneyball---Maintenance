@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email Template for notification sent after End of Job Report submitted</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>HOG_Standard_Letter_Head</letterhead>
+    <name>HOG  - End Of Job Report Submitted</name>
+    <style>formalLetter</style>
+    <subject>End of Job Report has been submitted for {!HOG_EOJ__c.Well_Location_Name__c}, Rig Program #: {!HOG_EOJ__c.Service_Rig_Program__c}</subject>
+    <textOnly>End of Job Report {!HOG_EOJ__c.Name} has been submitted by {!HOG_EOJ__c.LastModifiedBy}
+
+End Of Job Report Details:
+
+
+
+Work Order #: {!HOG_EOJ__c.Work_Order__c}
+Well Location: {!HOG_EOJ__c.Well_Location_Name__c}
+Rig Program #: {!HOG_EOJ__c.Service_Rig_Program__c}
+Find the link for the End of Job report
+{!HOG_EOJ__c.Link}</textOnly>
+    <type>html</type>
+</EmailTemplate>

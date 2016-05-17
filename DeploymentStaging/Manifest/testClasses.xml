@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+	<types>
+		<!--VTT-->
+		<members>VTT_ActivityDetailTimeLogControllerXTest</members>
+		<members>VTT_ActivityListControllerTest</members>
+		<members>VTT_EmailNotificationsTest</members>
+		<members>VTT_InterfaceMonitorControllerTest</members>
+		<members>VTT_InterfaceMonitorScheduleTest</members>
+		<members>VTT_ManageAssignmentsControllerTest</members>
+		<members>VTT_TestData</members>
+		<members>VTT_TradesmanAssignmentControllerXTest</members>
+		<members>VTT_TradesmanScheduleControllerTest</members>
+		<members>VTT_UtilitiesTest</members>
+		<members>VTT_WorkFlowEngineTest</members>
+		<members>POC_VTTM_ActivityListControllerTest</members>
+		<members>DEFT_UtilitiesTest</members>
+		<members>WellLocationEquipmentHierarchyCtrlXTest</members>
+		<name>ApexClass</name>
+	</types>
+    <version>35.0</version>
+</Package>

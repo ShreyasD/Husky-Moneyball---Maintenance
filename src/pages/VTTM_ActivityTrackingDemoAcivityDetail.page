@@ -1,0 +1,15 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+
+	<ion-view view-title="Activity Detail">
+	  <ion-content>
+	  	<div class="card padding">
+			<h3>{{activity.Maintenance_Work_Order__r.Name}}</h3>
+	        <p><strong>{{activity.Name}}</strong></p>
+			<p><strong>{!$ObjectType.Work_Order_Activity__c.Fields.Status__c.Label} :</strong> {{activity.Status__c}}</p>
+			<p><strong>{!$ObjectType.Work_Order_Activity__c.Fields.Description__c.Label}: </strong> {{activity.Description__c}}</p>
+			<p><strong>{!$ObjectType.HOG_Maintenance_Servicing_Form__c.Fields.User_Status_Code__c.Label}: </strong> {{activity.Maintenance_Work_Order__r.User_Status_Code__c}}</p>
+		</div>
+	  </ion-content>
+	</ion-view>
+	
+</apex:page>

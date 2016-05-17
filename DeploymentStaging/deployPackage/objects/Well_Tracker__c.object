@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <fields>
+        <fullName>Category__c</fullName>
+        <externalId>false</externalId>
+        <label>Category</label>
+        <picklist>
+            <controllingField>Well_Status_Reason__c</controllingField>
+            <picklistValues>
+                <fullName>Door Pull</fullName>
+                <controllingFieldValues>Operations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Economics</fullName>
+                <controllingFieldValues>Requires Engineering</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Extreme Temperature</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Facility ESD</fullName>
+                <controllingFieldValues>Operations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Flowline</fullName>
+                <controllingFieldValues>Surface Equipment</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Foamy Tank</fullName>
+                <controllingFieldValues>Trucking / Fluid Management</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Fuel Supply</fullName>
+                <controllingFieldValues>Surface Equipment</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>High Casing Pressure</fullName>
+                <controllingFieldValues>Downhole Intervention</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>High Tank</fullName>
+                <controllingFieldValues>Trucking / Fluid Management</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lease Road Access</fullName>
+                <controllingFieldValues>Operations</controllingFieldValues>
+                <controllingFieldValues>Trucking / Fluid Management</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Low Casing Pressure</fullName>
+                <controllingFieldValues>Downhole Intervention</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Low Hydraulic Pressure</fullName>
+                <controllingFieldValues>Downhole Intervention</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Low Production</fullName>
+                <controllingFieldValues>Downhole Intervention</controllingFieldValues>
+                <controllingFieldValues>Well Watch List</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Maintenance</fullName>
+                <controllingFieldValues>Operations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Motor</fullName>
+                <controllingFieldValues>Surface Equipment</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New Well Completion</fullName>
+                <controllingFieldValues>Well Watch List</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No Load</fullName>
+                <controllingFieldValues>Trucking / Fluid Management</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No Trucks</fullName>
+                <controllingFieldValues>Trucking / Fluid Management</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Offset Drilling</fullName>
+                <controllingFieldValues>Operations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Oil Too Cold</fullName>
+                <controllingFieldValues>Trucking / Fluid Management</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Oil Too Hot</fullName>
+                <controllingFieldValues>Trucking / Fluid Management</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Operator Direction</fullName>
+                <controllingFieldValues>Operations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <controllingFieldValues>Operations</controllingFieldValues>
+                <controllingFieldValues>Well Watch List</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Power Outage</fullName>
+                <controllingFieldValues>Surface Equipment</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Safety/Regulatory</fullName>
+                <controllingFieldValues>Operations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sanded Valve</fullName>
+                <controllingFieldValues>Trucking / Fluid Management</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Service Rig Request</fullName>
+                <controllingFieldValues>Requires Engineering</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tank(s)</fullName>
+                <controllingFieldValues>Surface Equipment</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Thunder Storm</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tubing on Vacuum</fullName>
+                <controllingFieldValues>Downhole Intervention</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Weather Conditions</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Wellhead Drive</fullName>
+                <controllingFieldValues>Surface Equipment</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Well Is Torqued</fullName>
+                <controllingFieldValues>Downhole Intervention</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Well Is Torqueing Up</fullName>
+                <controllingFieldValues>Downhole Intervention</controllingFieldValues>
+                <controllingFieldValues>Well Watch List</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Well Review</fullName>
+                <controllingFieldValues>Requires Engineering</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Well Testing</fullName>
+                <controllingFieldValues>Operations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Winter Storm</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Well Startup</fullName>
+                <controllingFieldValues>Operations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+    </fields>
+</CustomObject>

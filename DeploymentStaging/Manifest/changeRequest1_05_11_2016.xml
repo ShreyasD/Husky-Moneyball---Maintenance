@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+	<types>
+		<members>VTT_ActivityListView</members>
+		<name>ApexPage</name>
+	</types>
+	<types>
+		<!--VTT-->
+		<members>VTT_ActivityListController</members>
+		<members>VTT_ActivityListControllerTest</members>
+		<members>DEFT_Utilities</members>
+		<members>DEFT_UtilitiesTest</members>
+		<members>DEFT_TestData</members>
+		<name>ApexClass</name>
+	</types>
+	<types>
+        <members>HOG_EOJ__c</members>
+        <name>Workflow</name>
+    </types>
+    <version>35.0</version>
+</Package>

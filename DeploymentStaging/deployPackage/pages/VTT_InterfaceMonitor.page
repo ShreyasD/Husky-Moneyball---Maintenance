@@ -1,0 +1,52 @@
+<apex:page showHeader="true" sidebar="true" controller="VTT_InterfaceMonitorController">
+	<apex:sectionHeader title="Work Order Activity Status Interface Monitoring" subtitle="Interface Monitoring"/>
+	<apex:pageMessages id="errors" escape="false" />
+	<apex:form >
+	<!-- View Mode -->
+	<apex:pageBlock id="details" rendered="{!ViewMode}">
+		<apex:pageBlockButtons location="top">
+			<apex:commandButton value="Reload" action="{!RefreshData}"/>
+			<apex:commandButton value="Edit" action="{!StartEdit}" disabled="{!JobActive}"/>
+
+			<apex:commandButton value="Activate" action="{!ScheduleJob}" rendered="{!NOT(JobActive)}" 
+			reRender="errors, details"/>
+			<apex:commandButton value="Deactivate" action="{!Deactivate}" rendered="{!JobActive}"
+			reRender="errors, details"/>
+
+			<apex:commandButton value="Exit"/>			
+		</apex:pageBlockButtons>
+		<apex:pageBlockSection columns="1">
+			<apex:outputText value="{!WorkOrderNumber}" label="Work Order Number" />
+			<apex:outputText value="{!ActivityNumber}" label="Activity Number" />
+			<apex:outputText value="{!ActivityStatusesToToggle}" label="Activity Statuses To Toggle"/>
+			<apex:outputText value="{!NotifyOnFailure}" label="Notify on Failure"/>
+			<apex:outputText value="{!TimeBetweenJobRuns}" label="Time Between Job Runs (min)" />
+<!-- 			<apex:outputText value="{!cs.ActivityId__c}" label="Activity ID"/> -->
+			<apex:outputText value="{!cs.Expected_Activity_Status__c}" label="Expected Activity Status"/>
+			<apex:outputText value="{!JobStatus}" label="Job Status"/>
+			<!-- <apex:outputText value="{!JobLog}" label="Job Log"/> -->
+
+			<apex:inputtextarea value="{!JobLog}" disabled="true" label="Job Log" readonly="true" 
+			rows="5" style="width:500px;">
+			</apex:inputtextarea>			
+
+		</apex:pageBlockSection>
+	</apex:pageBlock>
+	<!-- Edit Mode -->
+	<apex:pageBlock rendered="{!NOT(ViewMode)}">
+		<apex:pageBlockButtons location="top">
+			<apex:commandButton value="Save" action="{!SaveSettings}"/>
+			<apex:commandButton value="Cancel" action="{!CancelEdit}"/>
+			<apex:commandButton value="Exit"/>			
+		</apex:pageBlockButtons>
+		<apex:pageBlockSection columns="1">
+			<apex:inputText value="{!WorkOrderNumber}" label="Work Order Number" />
+			<apex:inputText value="{!ActivityNumber}" label="Activity Number" />
+			<apex:inputText value="{!ActivityStatusesToToggle}" label="Activity Statuses To Toggle"/>
+			<apex:inputTextarea value="{!NotifyOnFailure}" label="Notify on Failure" 
+			style="width:300px;height:50px;" rows="3"/>
+			<apex:inputText value="{!TimeBetweenJobRuns}" label="Time Between Job Runs (min)" />
+		</apex:pageBlockSection>
+	</apex:pageBlock>
+	</apex:form>
+</apex:page>

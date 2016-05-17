@@ -1,0 +1,68 @@
+<apex:page controller="VTT_TradesmanScheduleController" showHeader="false" sidebar="false" 
+standardStyleSheets="false" applyHtmlTag="false" applyBodyTag="false"
+docType="html-5.0">
+
+
+    <apex:composition template="POC_VTTM_Template">
+        <apex:define name="title">Calendar</apex:define>
+        <apex:define name="head">
+
+		<apex:includescript value="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.js" />
+		<apex:includescript value="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.js" />
+		<apex:stylesheet value="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.css"/>		
+
+            <script type="text/javascript">
+				//jQuery = $j;
+
+			    $j(document).on('pageshow','#currentPage',function(e,data){    
+			        $j('#calendar').fullCalendar({
+			            theme: false,
+			            header: {
+			                        left: 'prev,next today',
+			                        center: 'title',
+			                        right: 'month,agendaWeek,agendaDay'
+			                    },
+			            editable: false,
+			            eventLimit: true,
+			            eventClick: function(calEvent, jsEvent, view) {
+			            	showLoadingModal();
+			            	window.location.href = calEvent.url;
+    					},
+			            events:
+			            [
+			                //At run time, this APEX Repeat will reneder the array elements for the events array
+			                <apex:repeat value="{!events}" var="e">
+			                    {
+			                        title: "{!JSENCODE(e.title)}",
+			                        start: '{!e.startString}',
+			                        end: '{!e.endString}',
+			                        url: "/apex/POC_VTTM_ActivityDetail?id=" + '{!e.activityId}',
+			                        allDay: {!e.allDay},
+			                        className: '{!e.className}'
+			                    },
+			                </apex:repeat>
+			            ]
+			        });
+			    });
+
+
+
+            </script>
+
+
+
+        </apex:define>
+        <apex:define name="header"><h1>Calendar</h1></apex:define>
+        <apex:define name="content"> 
+            <div data-role="content" class="ui-content" role="main" data-theme="c">
+				<div id='calendar' style="width:100%;"></div>
+            </div>
+        </apex:define>
+
+       <!--  <apex:define name="footer"/> -->
+
+
+
+    </apex:composition>
+
+</apex:page>

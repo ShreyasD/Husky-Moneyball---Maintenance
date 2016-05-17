@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Approval notification sent to related production engineer and service rig coordinator when both technical and financial approval acquired.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>HOG_Standard_Letter_Head</letterhead>
+    <name>HOG - Service Rig Program Overall Approved</name>
+    <style>formalLetter</style>
+    <subject>Service Rig Program Approved: {!HOG_Service_Rig_Program__c.Name} - {!HOG_Service_Rig_Program__c.Well_Location_Name__c} - {!HOG_Service_Rig_Program__c.PVR_AVGVOL_5D_OIL__c} m3 Oil per day</subject>
+    <textOnly>{!HOG_Service_Rig_Program__c.Name} has been financially and technically approved. Please follow the link below and create a work order for the following Service Rig Program in SAP.
+
+{!HOG_Service_Rig_Program__c.Link}</textOnly>
+    <type>html</type>
+</EmailTemplate>

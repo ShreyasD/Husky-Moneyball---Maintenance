@@ -1,0 +1,734 @@
+<apex:page standardController="Work_Order_Activity__c" showHeader="false" sidebar="false" 
+standardStyleSheets="false" applyHtmlTag="false" applyBodyTag="false"
+extensions="VTT_ActivityDetailTimeLogControllerX"
+docType="html-5.0">
+
+
+    <apex:composition template="POC_VTTM_Template">
+        <apex:define name="title">Activity Detail</apex:define>
+        <apex:define name="head">
+			<style>
+				.customTextArea {
+			  	height: auto !important; /* !important is used to force override. */
+				}
+
+				#actionButtons .ui-btn { height: 50px; font-size: 48px; }
+
+			</style>
+            <script type="text/javascript">
+				$j( document ).on( "pageinit", "#currentPage", function( event ) {
+				  //alert( "This page was just enhanced by jQuery Mobile!" );
+				  getCurrentLocation();
+				});
+
+			    function getCurrentLocation()
+			    {
+			        if(!!navigator.geolocation) {   
+
+				        function success(position) {
+				            // Location found, show map with these coordinates
+			                var geolocate = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+							//alert(position.coords.latitude);
+			                $j('input[id$=inputLatitude]').val(position.coords.latitude);
+			                $j('input[id$=inputLongitude]').val(position.coords.longitude);
+				        }
+				        function fail(error) {
+							alert('code: '    + error.code    + '\n' +
+		                			'message: ' + error.message + '\n');
+
+				        }
+
+			            navigator.geolocation.getCurrentPosition(success, fail, 
+			            	{maximumAge: 60000, 
+			            		enableHighAccuracy:true, 
+			            		timeout: 6000
+			            	});
+			        }
+			    } 
+
+                function changeToPage(toPage) {
+                    $j(":mobile-pagecontainer").pagecontainer("change", toPage, { showLoadMsg: true });
+                }
+            </script>
+        </apex:define>
+        <apex:define name="header">
+			<h1>Activity Detail</h1>
+
+			<apex:outputPanel id="editsection" rendered="{!workflowEngine.ViewMode}">
+			<div data-role="navbar" data-id="main" data-iconpos="left">
+				<ul>
+					<li><a href="#currentPage" data-icon="info" class="ui-btn-active ui-state-persist">Detail</a></li>
+					<li><a href="#tradesmenPage" data-icon="search">Tradesmen</a></li>
+					<li><a href="#attachmentsPage" data-icon="grid">Attachments</a></li>	
+				</ul>
+			</div>
+			</apex:outputPanel>
+
+        </apex:define>
+        <apex:define name="content"> 
+
+
+        <apex:form >
+            <div data-role="content" class="ui-content" role="main" data-theme="b">
+
+        
+
+            <!-- Hidden fields for coordinates -->
+            <apex:inputHidden value="{!workflowEngine.CurrentLatitude}" id="inputLatitude"/>
+            <apex:inputHidden value="{!workflowEngine.CurrentLongitude}" id="inputLongitude"/>
+            <!-- and bunch of fields we want to have access to in the controller but we don't want to display on the screen -->
+            <apex:outputPanel rendered="false">
+
+                <apex:outputfield value="{!Work_Order_Activity__c.Maintenance_Work_Order__r.Notification_Number__c}"/>
+
+                <apex:outputfield value="{!Work_Order_Activity__c.Maintenance_Work_Order__r.Equipment__r.Catalogue_Code__c}"/>
+                <apex:outputfield value="{!Work_Order_Activity__c.Maintenance_Work_Order__r.On_Hold__c}"/>
+                <apex:outputfield value="{!Work_Order_Activity__c.Maintenance_Work_Order__r.Location__c}"/>
+                <apex:outputField value="{!Work_Order_Activity__c.Maintenance_Work_Order__r.Facility__c}" />
+                
+                <apex:outputfield value="{!Work_Order_Activity__c.Part__c}" />
+                <apex:outputfield value="{!Work_Order_Activity__c.Part__r.Part_Code__c}" />
+                <apex:outputfield value="{!Work_Order_Activity__c.Part__r.Part_Description__c}" />                
+                <apex:outputfield value="{!Work_Order_Activity__c.Damage__c }" />
+                <apex:outputfield value="{!Work_Order_Activity__c.Cause__c }" />
+                <apex:outputfield value="{!Work_Order_Activity__c.Cause__r.Cause_Code__c}" />                
+                <apex:inputHidden value="{!Work_Order_Activity__c.Part__r}" />
+
+                <apex:outputfield value="{!Work_Order_Activity__c.LastModifiedById}"/>                
+                <apex:outputfield value="{!Work_Order_Activity__c.LastModifiedDate}"/>
+                <apex:outputField value="{!Work_Order_Activity__c.Status__c}"/>  
+
+                <apex:outputfield value="{!Work_Order_Activity__c.Assigned_Vendor__c}"/>
+
+                <apex:outputField value="{!Work_Order_Activity__c.Location__c}"/>
+                <apex:outputField value="{!Work_Order_Activity__c.Facility__c}"/>                 
+              
+                <apex:dataTable value="{!Work_Order_Activity__c.Working_Tradesmen__r}" var="tradesmanRecord">
+                    <apex:column value="{!tradesmanRecord.id}"/>
+                    <apex:column value="{!tradesmanRecord.Name}"/>
+                    <apex:column value="{!tradesmanRecord.Tradesman_Status__c}"/>
+                    <apex:column value="{!tradesmanRecord.Tradesman_Status_Date__c}"/>
+                    <apex:column value="{!tradesmanRecord.Account.Name}"/>
+                    <apex:column value="{!tradesmanRecord.Phone}"/>                   
+                </apex:dataTable>
+
+            </apex:outputPanel>
+
+
+			<apex:outputPanel id="ActivityDetail" rendered="{!workflowEngine.ViewMode}">
+                <ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="b">
+                  <li data-role="list-divider">Work Order Header</li>
+                    <li><strong>Work Order: </strong>{!Work_Order_Activity__c.Maintenance_Work_Order__r.Name}</li>
+                    <li><strong>Order Description: </strong>{!Work_Order_Activity__c.Maintenance_Work_Order__r.Order_Description__c}</li>
+                    <li><strong>Description of Equipment: </strong>{!Work_Order_Activity__c.Maintenance_Work_Order__r.Description_of_Equipment__c}</li>
+                    <li><strong>Required End Date: </strong><apex:outputField value="{!Work_Order_Activity__c.Maintenance_Work_Order__r.Required_End_Date__c}"/></li>        
+                </ul>
+                <br/><br/>
+		        <ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="b">
+		          <li data-role="list-divider">Activity Detail</li>
+                    <li><strong>Activity: </strong>{!Work_Order_Activity__c.Name}</li>
+                    <li><strong>{!$ObjectType.Work_Order_Activity__c.Fields.Scheduled_Start_Date__c.Label}: </strong><apex:outputField value="{!Work_Order_Activity__c.Scheduled_Start_Date__c}"/></li>
+                    <li><strong>{!$ObjectType.Work_Order_Activity__c.Fields.Scheduled_Finish_Date__c.Label}: </strong><apex:outputField value="{!Work_Order_Activity__c.Scheduled_Finish_Date__c}"/></li>
+		        </ul>
+                <br/><br/>
+                <apex:outputPanel rendered="{!OperatorOnCall != null}">
+                    <ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="b">
+                      <li data-role="list-divider">Operator On Call</li>
+                      <li><strong>{!$ObjectType.Route__c.fields.Operator_on_Call_URL__c.Label}: </strong>
+                      <apex:outputField value="{!OperatorOnCall.Name}"/></li>
+                      <li><a href="tel:{!IF(OperatorOnCall.MobilePhone == null, OperatorOnCall.Phone, OperatorOnCall.MobilePhone)}" rel="external"><strong>{!$ObjectType.Route__c.fields.Operator_on_Call_URL__c.Label} Tel: </strong>
+                      {!IF(OperatorOnCall.MobilePhone == null, OperatorOnCall.Phone, OperatorOnCall.MobilePhone)}</a></li>
+                    </ul>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!OperatorOnCall == null}">
+                    <ul data-role="listview" data-inset="true" data-theme="e" data-dividertheme="e" data-icon="alert">
+                      <li data-role="list-divider">No Operator On Call Found</li>
+                      <li>Operator on Call not specified on Work Order or Work Order Activity</li>
+                    </ul>
+                </apex:outputPanel>
+
+
+            	<apex:outputPanel rendered="{!AND(workflowEngine.userHasEditAccess,NOT(workflowEngine.PageReloadRequired))}"> 
+					<!-- <div data-role="controlgroup"> -->
+					<div id="actionButtons">
+
+<!-- 	                <apex:commandButton action="{!workflowEngine.RejectActivity_Start}" value="Reject Activity"
+	                rendered="{!workflowEngine.CanRejectActivity}"/> -->
+
+                    <apex:outputPanel rendered="{!workflowEngine.CanRejectActivity}">
+
+                        <apex:actionFunction action="{!workflowEngine.RejectActivity_Start}" name="RejectActivity_Start">
+                        </apex:actionFunction>
+
+                        <a href="#" data-role="button" data-inline="true"  data-ajax="false" 
+                            onclick="showLoadingModal(); RejectActivity_Start()">Reject Activity</a>
+                    </apex:outputPanel>                   
+
+<!-- 	               <apex:commandButton action="{!workflowEngine.GenericActivity_Start1}" value="{!workflowEngine.WorkFlowActions[0].ActionName}"  
+	               rendered="{!and(workflowEngine.CanExecuteAction, workflowEngine.WorkFlowActions.size>0)}"
+	               >
+	                    <apex:param name="ActionName1"
+	                                    value="{!workflowEngine.WorkFlowActions[0].ActionName}"
+	                                    assignTo="{!workflowEngine.ActionName}"/>
+
+	               </apex:commandButton> -->
+
+                    <apex:outputPanel rendered="{!and(workflowEngine.CanExecuteAction, workflowEngine.WorkFlowActions.size>0)}">
+
+                        <apex:actionFunction action="{!workflowEngine.GenericActivity_Start1}" name="GenericActivity_Start1">
+                                <apex:param name="ActionName1"
+                                                value="{!workflowEngine.WorkFlowActions[0].ActionName}"
+                                                assignTo="{!workflowEngine.ActionName}"/>                
+                        </apex:actionFunction>
+
+
+                        <a href="#" data-role="button" data-inline="true" data-ajax="false"
+                        onclick="showLoadingModal(); GenericActivity_Start1(); return false;">
+                        {!workflowEngine.WorkFlowActions[0].ActionName}
+                        </a>
+                    </apex:outputPanel> 
+
+
+
+
+<!-- 	               <apex:commandButton action="{!workflowEngine.GenericActivity_Start2}" value="{!workflowEngine.WorkFlowActions[1].ActionName}"  
+	               rendered="{!and(workflowEngine.CanExecuteAction, workflowEngine.WorkFlowActions.size>1)}"
+	               onclick="showLoadingModal()">
+	                    <apex:param name="ActionName2"
+	                                    value="{!workflowEngine.WorkFlowActions[1].ActionName}"
+	                                    assignTo="{!workflowEngine.ActionName}"/>                       
+	               </apex:commandButton> -->
+
+
+                   <apex:outputPanel rendered="{!and(workflowEngine.CanExecuteAction, workflowEngine.WorkFlowActions.size>1)}">
+
+                        <apex:actionFunction action="{!workflowEngine.GenericActivity_Start2}" name="GenericActivity_Start2">
+                                <apex:param name="ActionName2"
+                                                value="{!workflowEngine.WorkFlowActions[1].ActionName}"
+                                                assignTo="{!workflowEngine.ActionName}"/>                
+                        </apex:actionFunction>
+
+
+                        <a href="#" data-role="button" data-inline="true" data-ajax="false" 
+                        onclick="showLoadingModal(); GenericActivity_Start2(); return false;">
+                        {!workflowEngine.WorkFlowActions[1].ActionName}
+                        </a>
+                    </apex:outputPanel>
+
+                    <apex:outputPanel rendered="{!workflowEngine.CanStartJobAtEquipment}">
+
+                        <apex:actionFunction action="{!workflowEngine.StartJobAtEquipment_Start}" name="StartJobAtEquipment_Start">
+                        </apex:actionFunction>
+
+                        <a href="#" data-role="button" data-inline="true" data-ajax="false" 
+                            onclick="showLoadingModal(); StartJobAtEquipment_Start(); return false;">Start Job at Equipment</a>
+                    </apex:outputPanel> 
+
+                    <apex:outputPanel rendered="{!workflowEngine.CanPutActivityOnHold}">
+
+                        <apex:actionFunction action="{!workflowEngine.ActivityOnHold_Start}" name="ActivityOnHold_Start">
+                        </apex:actionFunction>
+
+                        <a href="#" data-role="button" data-inline="true" data-ajax="false" 
+                            onclick="showLoadingModal(); ActivityOnHold_Start(); return false;">Job On Hold</a>
+                    </apex:outputPanel>
+
+                    <apex:outputPanel rendered="{!workflowEngine.CanCompleteJob}">
+
+                        <apex:actionFunction action="{!workflowEngine.JobComplete_Start}" name="JobComplete_Start">
+                        </apex:actionFunction>
+
+                        <a href="#" data-role="button" data-inline="true" data-ajax="false" 
+                            onclick="showLoadingModal(); JobComplete_Start(); return false;">Job Complete</a>
+                    </apex:outputPanel>  
+
+
+	                </div>
+	                <!-- </div> -->
+	            </apex:outputPanel>  
+			</apex:outputPanel>
+
+
+			<apex:outputPanel id="ActivityDetailHeader" rendered="{!NOT(workflowEngine.ViewMode)}">
+		        <h3>{!workflowEngine.ViewScreenDescription}</h3>
+			</apex:outputPanel>
+
+            <!-- Reject Activity Edit section -->
+            <apex:outputPanel rendered="{!workflowEngine.ActionMode_RejectActivity}">
+            	<div data-role="fieldcontainer">
+                <apex:outputLabel value="Reject Reason:" />
+				<apex:inputTextarea styleClass="customTextArea" required="true" value="{!workflowEngine.ActionComment}" label="Reject Reason:" rows="5"/>
+				</div>
+            </apex:outputPanel>
+
+			<apex:outputPanel rendered="{!OR(workflowEngine.ActionMode_Generic, workflowEngine.ActionMode_StartJobAtEquipment)}">
+				<div data-role="fieldcontainer">
+            	<apex:outputLabel value="Comments:" />
+            	<apex:inputTextarea styleClass="customTextArea" required="true" value="{!workflowEngine.ActionComment}" label="Comments:" rows="5"/>
+            	</div>
+            </apex:outputPanel>
+
+
+            <!-- Activity On Hold Edit section -->
+            <apex:outputPanel rendered="{!workflowEngine.ActionMode_PutOnHold}">
+            	<div data-role="fieldcontainer">
+                <apex:outputLabel value="Reason:" />
+                <apex:selectList id="inputOnHoldReason" value="{!workflowEngine.OnHoldStatusReason}" size="1" styleClass="requiredInput" label="Reason:" required="true">
+                    <apex:selectOption itemValue="Pulled off activity" itemLabel="Pulled off activity"/>
+                    <apex:selectOption itemValue="Waiting on parts" itemLabel="Waiting on parts"/>
+                    <apex:selectOption itemValue="Waiting on information" itemLabel="Waiting on information"/>
+                    <apex:selectOption itemValue="Waiting on repairs" itemLabel="Waiting on repairs"/>
+                </apex:selectList>
+                </div>
+
+                <apex:outputLabel value="Comments:" />
+                <apex:inputTextarea styleClass="customTextArea" required="true" value="{!workflowEngine.ActionComment}" label="Comments:" rows="5"/>
+            </apex:outputPanel>
+
+
+            <!-- Job Complete Edit section for non-Equipment work order-->
+            <apex:outputPanel rendered="{!AND(workflowEngine.ActionMode_JobComplete, NOT(EquipmentWorkOrder), workflowEngine.OtherTradesmenStillWorking.size <= 0)}" >
+                <apex:outputLabel value="Comments:" />
+<!--                 <apex:inputTextarea styleClass="customTextArea" required="true" 
+                value="{!Work_Order_Activity__c.Work_Details__c}" label="{!$ObjectType.Work_Order_Activity__c.Fields.Work_Details__c.Label}" rows="5"/> -->
+                <apex:inputTextarea styleClass="customTextArea" required="true" 
+                    value="{!workflowEngine.ActionComment}" label="{!$ObjectType.Work_Order_Activity__c.Fields.Work_Details__c.Label}" rows="5"/>
+                
+            </apex:outputPanel>
+            <!-- End Job Complete Edit section for non-Equipment work order-->
+
+
+            <!-- Job Complete Edit section for Equipment Work Order -->
+            <apex:outputPanel rendered="{!AND(workflowEngine.ActionMode_JobComplete, EquipmentWorkOrder, workflowEngine.OtherTradesmenStillWorking.size <= 0)}">
+                <div data-role="fieldcontainer">
+                    <apex:outputlabel value="Parts" rendered="{!showPartsDamageCause}"/>
+                     <apex:actionRegion rendered="{!showPartsDamageCause}">
+                        <apex:selectList value="{!partItem}" size="1">
+                            <apex:actionSupport event="onchange" reRender="damageSection1" action="{!damagesSelection}"/>
+                            <apex:selectOptions value="{!partsOptions}"/>
+                        </apex:selectList>
+                    </apex:actionRegion>                    
+                </div>
+                <div data-role="fieldcontainer">
+                    <apex:outputlabel value="Damage" rendered="{!showPartsDamageCause}"/>
+                    <apex:outputpanel id="damageSection1" styleClass="requiredInput" rendered="{!showPartsDamageCause}">
+                        <apex:selectList value="{!damageItem}" size="1">
+                            <apex:selectOptions value="{!damagesOptions}"/>
+                        </apex:selectList>
+                    </apex:outputpanel>                    
+                </div>
+                <div data-role="fieldcontainer">
+                    <apex:outputlabel value="Cause" rendered="{!showPartsDamageCause}"/>
+                     <apex:outputpanel styleClass="requiredInput" rendered="{!showPartsDamageCause}"> 
+                        <apex:selectList value="{!causeItem}" size="1">
+                            <apex:selectOptions value="{!causesOptions}"/>
+                        </apex:selectList>
+                    </apex:outputpanel>
+                </div>
+                <div data-role="fieldcontainer">  
+                    <apex:outputLabel value="{!$ObjectType.Work_Order_Activity__c.Fields.Work_Details__c.Label}" />
+                    
+                    <apex:inputTextarea styleClass="customTextArea" required="true" 
+                        value="{!workflowEngine.ActionComment}" label="{!$ObjectType.Work_Order_Activity__c.Fields.Work_Details__c.Label}" rows="5"/>
+                </div>                
+            </apex:outputPanel>
+
+            <!-- Job Complete Edit section if other tradesmen still working -->
+            <apex:outputPanel title="Complete Activity:" rendered="{!AND(workflowEngine.ActionMode_JobComplete, workflowEngine.OtherTradesmenStillWorking.size > 0)}">
+                <!--<apex:pageMessage title="Tradesmen Still Working" summary="The following people are still working the activity. You will be logged as “Finished” for this activity." severity="warning" strength="1"/>-->
+                <div class="ui-corner-all ui-icon-alert">
+                    <h3>Tradesmen Still Working</h3>
+                    <br/>
+                    <p>The following people are still working the activity. You will be logged as "Finished" for this activity.</p>
+                </div>
+                <br/>
+                <!--<apex:pageBlockTable styleClass="table table-condensed table-hover" value="{!workflowEngine.OtherTradesmenStillWorking}"
+                    var="tradesmanRec" title="Working Tradesmen">
+                    <apex:column value="{!tradesmanRec.Name}"/>
+                    <apex:column value="{!tradesmanRec.Account.Name}"/>
+                    <apex:column value="{!tradesmanRec.Phone}"/>
+                    <apex:column value="{!tradesmanRec.Tradesman_Status__c}"/>
+                    <apex:column value="{!tradesmanRec.Tradesman_Status_Date__c}"/>
+                </apex:pageBlockTable>-->
+                <ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="b">
+                  <apex:repeat var="tradesmanRec" value="{!workflowEngine.OtherTradesmenStillWorking}">
+                    <li><strong>{!$ObjectType.Contact.fields.Name.Label}: </strong>
+                    <apex:outputField value="{!tradesmanRec.Name}"/></li>
+                    <li><strong>{!$ObjectType.Account.fields.Name.Label}: </strong>
+                    <apex:outputField value="{!tradesmanRec.Account.Name}"/></li>
+                    <li><strong>{!$ObjectType.Contact.fields.Phone.Label}: </strong>
+                    <apex:outputField value="{!tradesmanRec.Phone}"/></li>
+                    <li><strong>{!$ObjectType.Contact.fields.Tradesman_Status__c.Label}: </strong>
+                    <apex:outputField value="{!tradesmanRec.Tradesman_Status__c}"/></li>
+                    <li><strong>{!$ObjectType.Contact.fields.Tradesman_Status_Date__c.Label}: </strong>
+                    <apex:outputField value="{!tradesmanRec.Tradesman_Status_Date__c}"/></li>
+                  </apex:repeat>
+                </ul>
+            </apex:outputPanel>
+            <!-- Job Complete Edit section if other tradesmen still working -->
+
+<!--             <apex:pageBlock >
+            <apex:pageBlocksection title="Parts and Damages" rendered="{!AND(workflowEngine.ActionMode_JobComplete, EquipmentWorkOrder)}" columns="1">
+
+                <apex:panelGrid id="damageEdit" columns="4" width="70%" columnClasses="label, dataCol, label, dataCol">
+                    <apex:outputlabel value="Parts" rendered="{!showPartsDamageCause}"/>
+                     <apex:actionRegion rendered="{!showPartsDamageCause}">
+                     <apex:outputpanel styleClass="requiredInput"> 
+                     <apex:outputpanel layout="block" styleClass="requiredBlock"/>                
+                        <apex:selectList value="{!partItem}" size="1" style="width:60%">
+                            <apex:actionSupport event="onchange" reRender="damageSection" action="{!damagesSelection}"/>
+                            <apex:selectOptions value="{!partsOptions}"/>
+                        </apex:selectList>
+                     </apex:outputpanel>
+                    </apex:actionRegion>
+                    <apex:outputText rendered="{!showPartsDamageCause}"/>
+                    <apex:outputText rendered="{!showPartsDamageCause}"/>
+
+                    <apex:outputlabel value="Damage" rendered="{!showPartsDamageCause}"/>
+                    <apex:outputpanel id="damageSection" styleClass="requiredInput" rendered="{!showPartsDamageCause}">
+                        <apex:outputpanel layout="block" styleClass="requiredBlock"/>  
+                        <apex:selectList value="{!damageItem}" size="1" style="width:60%">
+                            <apex:selectOptions value="{!damagesOptions}"/>
+                        </apex:selectList>
+                    </apex:outputpanel>
+                    <apex:outputText rendered="{!showPartsDamageCause}"/>
+                    <apex:outputText rendered="{!showPartsDamageCause}"/>                    
+
+                    <apex:outputLabel value="{!$ObjectType.Work_Order_Activity__c.Fields.Damage_Text__c.Label}" rendered="{!showPartsDamageCause}"/>
+                    <apex:outputPanel layout="block" styleClass="requiredInput" rendered="{!showPartsDamageCause}">
+                        <div class="requiredBlock"></div>    
+                           <apex:inputTextarea id="damageText" 
+                           label="{!$ObjectType.Work_Order_Activity__c.Fields.Damage_Text__c.Label}" 
+                           required="true" style="width:99%" value="{!Work_Order_Activity__c.Damage_Text__c}" rows="3"/>
+                    </apex:outputPanel>                    
+                    <apex:outputText rendered="{!showPartsDamageCause}"/>
+                    <apex:outputText rendered="{!showPartsDamageCause}"/>                   
+
+                    <apex:outputlabel value="Cause" rendered="{!showPartsDamageCause}"/>
+                     <apex:outputpanel styleClass="requiredInput" rendered="{!showPartsDamageCause}"> 
+                        <apex:outputpanel layout="block" styleClass="requiredBlock"/>                      
+                        <apex:selectList value="{!causeItem}" size="1" style="width:60%">
+                            <apex:selectOptions value="{!causesOptions}"/>
+                        </apex:selectList>
+                    </apex:outputpanel>
+                    <apex:outputText rendered="{!showPartsDamageCause}"/>
+                    <apex:outputText rendered="{!showPartsDamageCause}"/>
+
+                    <apex:outputLabel value="{!$ObjectType.Work_Order_Activity__c.Fields.Cause_Text__c.Label}" rendered="{!showPartsDamageCause}"/>
+                    <apex:outputPanel layout="block" styleClass="requiredInput" rendered="{!showPartsDamageCause}">
+                        <div class="requiredBlock"></div>    
+                        <apex:inputTextarea id="causeText" 
+                        label="{!$ObjectType.Work_Order_Activity__c.Fields.Cause_Text__c.Label}" 
+                        required="true" style="width:99%" value="{!Work_Order_Activity__c.Cause_Text__c}" rows="3"/>
+                    </apex:outputPanel>
+                    <apex:outputText rendered="{!showPartsDamageCause}"/>
+                    <apex:outputText rendered="{!showPartsDamageCause}"/>
+
+                    <apex:outputLabel value="{!$ObjectType.Work_Order_Activity__c.Fields.Work_Details__c.Label}" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <div class="requiredBlock"></div>    
+                        <apex:inputTextarea styleClass="customTextArea" required="true" 
+                            value="{!workflowEngine.ActionComment}" label="{!$ObjectType.Work_Order_Activity__c.Fields.Work_Details__c.Label}" rows="5"/>
+
+                    </apex:outputPanel>
+                    <apex:outputText />
+                    <apex:outputText />
+
+                    <apex:outputText />
+                </apex:panelGrid>
+
+            </apex:pageBlocksection>
+            </apex:pageBlock> -->
+            <!-- Job Complete Edit section for non-Equipment work order-->
+
+
+
+
+	        <apex:outputPanel id="editsection"  
+	        rendered="{!AND(NOT(workflowEngine.ViewMode), NOT(workflowEngine.PageReloadRequired))}">
+
+				<!-- <div data-role="controlgroup" data-type="horizontal" data-theme="c" data-dividertheme="b" > -->
+<!-- 	                <apex:commandButton action="{!workflowEngine.RejectActivity_End}" value="{!workflowEngine.SaveButtonLabel}" rendered="{!workflowEngine.ActionMode_RejectActivity}"
+	                onclick="showLoadingModal()"/> -->
+
+                    <apex:outputPanel rendered="{!workflowEngine.ActionMode_RejectActivity}">
+                        <apex:actionFunction action="{!workflowEngine.RejectActivity_End}" name="RejectActivity_End">
+                        </apex:actionFunction>
+
+                        <a href="#" data-role="button" data-inline="true" data-ajax="false"
+                        onclick="showLoadingModal(); RejectActivity_End(); return false;">
+                        {!workflowEngine.SaveButtonLabel}
+                        </a>
+                    </apex:outputPanel>                     
+
+<!-- 	                <apex:commandButton action="{!workflowEngine.GenericActivity_End}" value="{!workflowEngine.SaveButtonLabel}" rendered="{!workflowEngine.ActionMode_Generic}"
+	                onclick="showLoadingModal()"/> -->
+
+                    <apex:outputPanel rendered="{!OR(workflowEngine.ActionMode_Generic, workflowEngine.ActionMode_StartJobAtEquipment)}">
+                        <apex:actionFunction action="{!workflowEngine.GenericActivity_End}" 
+                        name="GenericActivity_End">
+                        </apex:actionFunction>
+
+                        <a href="#" data-role="button" data-inline="true" data-ajax="false"
+                        onclick="showLoadingModal(); GenericActivity_End(); return false;">
+                        {!workflowEngine.SaveButtonLabel}
+                        </a>
+                    </apex:outputPanel>                     
+
+<!-- 	                <apex:commandButton action="{!workflowEngine.ActivityOnHold_End}" value="{!workflowEngine.SaveButtonLabel}" rendered="{!workflowEngine.ActionMode_PutOnHold}"
+	                onclick="showLoadingModal()"/> -->
+
+                    <apex:actionFunction name="executeWSUpdateNotification" action="{!executeWSUpdateNotification}">
+                    </apex:actionFunction>
+
+                    <apex:outputPanel rendered="{!workflowEngine.ActionMode_PutOnHold}">
+                        <apex:actionFunction action="{!workflowEngine.ActivityOnHold_End}" 
+                        name="ActivityOnHold_End">
+                        </apex:actionFunction>
+
+                        <a href="#" data-role="button" data-inline="true" data-ajax="false"
+                        onclick="showLoadingModal(); ActivityOnHold_End(); return false;">
+                        {!workflowEngine.SaveButtonLabel}
+                        </a>
+                    </apex:outputPanel>  
+
+
+<!-- 	                <apex:commandButton action="{!JobComplete}" value="{!workflowEngine.SaveButtonLabel}" rendered="{!workflowEngine.ActionMode_JobComplete}" oncomplete="executeWSUpdateNotification()"
+	                onclick="showLoadingModal()"/> -->
+                    <apex:outputPanel rendered="{!workflowEngine.ActionMode_JobComplete}">
+                        <apex:actionFunction action="{!JobComplete}" name="JobComplete" oncomplete="executeWSUpdateNotification()">
+                        </apex:actionFunction>
+
+                        <a href="#" data-role="button" data-inline="true" data-ajax="false"
+                        onclick="showLoadingModal(); JobComplete(); return false;">
+                        {!workflowEngine.SaveButtonLabel}
+                        </a>
+                    </apex:outputPanel>                      
+
+<!-- 	                <apex:commandButton action="{!workflowEngine.VTT_CancelEdit}" immediate="true" html-formnovalidate="formnovalidate" value="Cancel" rendered="{!NOT(workflowEngine.ViewMode)}"
+	                onclick="showLoadingModal()"/>   -->
+
+                    <apex:actionFunction action="{!workflowEngine.VTT_CancelEdit}" immediate="true"
+                    name="VTT_CancelEdit">
+                    </apex:actionFunction>
+
+                    <a href="#" data-role="button" data-inline="true" data-ajax="false"
+                    onclick="showLoadingModal(); VTT_CancelEdit(); return false;">
+                    Cancel
+                    </a>                    
+
+			</apex:outputPanel>
+
+            </div>
+			<apex:actionFunction action="{!workflowEngine.GenericActivity_Start1}" name="GenericActivity_Start1">
+			<apex:param name="ActionName1"
+	                                    value="{!workflowEngine.WorkFlowActions[0].ActionName}"
+	                                    assignTo="{!workflowEngine.ActionName}"/>
+			</apex:actionFunction>
+
+
+			<div data-role="popup" id="popupPanel" data-corners="true" data-theme="b" 
+			data-overlay-theme="a" class="ui-content"
+			data-shadow="false" data-tolerance="0,0">
+
+            	<apex:outputPanel rendered="{!AND(workflowEngine.userHasEditAccess,NOT(workflowEngine.PageReloadRequired))}"> 
+					<!-- <div data-role="controlgroup"> -->
+
+	                <apex:commandButton action="{!workflowEngine.RejectActivity_Start}" value="Reject Activity"
+	                rendered="{!workflowEngine.CanRejectActivity}"/>
+
+	               <apex:commandButton action="{!workflowEngine.GenericActivity_Start1}" value="{!workflowEngine.WorkFlowActions[0].ActionName}"  
+	               rendered="{!and(workflowEngine.CanExecuteAction, workflowEngine.WorkFlowActions.size>0)}"
+	               onclick="showLoadingModal(); GenericActivity_Start1()"
+	               >
+	                    <apex:param name="ActionName1"
+	                                    value="{!workflowEngine.WorkFlowActions[0].ActionName}"
+	                                    assignTo="{!workflowEngine.ActionName}"/>
+
+	               </apex:commandButton>
+
+	               <apex:commandButton action="{!workflowEngine.GenericActivity_Start2}" value="{!workflowEngine.WorkFlowActions[1].ActionName}"  
+	               rendered="{!and(workflowEngine.CanExecuteAction, workflowEngine.WorkFlowActions.size>1)}"
+	               onclick="showLoadingModal()">
+	                    <apex:param name="ActionName2"
+	                                    value="{!workflowEngine.WorkFlowActions[1].ActionName}"
+	                                    assignTo="{!workflowEngine.ActionName}"/>                       
+	               </apex:commandButton>
+
+	                <apex:commandButton action="{!workflowEngine.ActivityOnHold_Start}" value="Job On Hold" 
+	                rendered="{!workflowEngine.CanPutActivityOnHold}"
+	                onclick="showLoadingModal()"
+	                />
+	                <apex:commandButton action="{!workflowEngine.JobComplete_Start}" value="Job Complete" 
+	                rendered="{!workflowEngine.CanCompleteJob}" 
+	                onclick="showLoadingModal()"/>
+	                <!-- </div> -->
+	            </apex:outputPanel>  
+
+				<a href="#demo-links" data-rel="close" data-role="button" data-theme="b" data-icon="delete" data-inline="true">Close</a>			    
+			</div>
+		</apex:form>	
+        </apex:define>
+
+		<apex:define name="additional">
+
+			<!--ASSIGNED TRADESMEN PAGE -->
+			<div data-role="page" data-theme="b" id="tradesmenPage" 
+					data-add-back-btn="true" data-back-btn-text="Back"
+					data-back-btn-theme="b">
+
+				<!--ASSIGNED TRADESMEN PAGE HEADER-->	
+				<div data-role="header" data-id="myHeader" data-position="fixed" data-theme="a">
+					<h1>Activity Detail</h1>
+					<div data-role="navbar" data-id="main" data-iconpos="left">
+						<ul>
+							<li><a href="#currentPage" data-icon="info">Detail</a></li>			
+							<li><a href="#tradesmenPage" data-icon="search" class="ui-btn-active ui-state-persist">Tradesmen</a></li>
+							<li><a href="#attachmentsPage" data-icon="grid">Attachments</a></li>
+						</ul>
+					</div>
+				</div>
+				<!--END ASSIGNED TRADESMEN PAGE HEADER-->	
+			
+				<!--ASSIGNED TRADESMEN PAGE CONTENT-->	
+				<div data-role="content">
+                    <apex:outputPanel rendered="{!tradesmanAssignments == null ||
+                        tradesmanAssignments.Size == 0}">
+                        <apex:outputText styleClass="data-collapsed-icon">No Tradesmen Assigned</apex:outputText>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!tradesmanAssignments != null &&
+                        tradesmanAssignments.Size > 0}">
+    			        <ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="b">
+                            <li data-role="list-divider">Assigned Tradesmen</li>
+                            <apex:repeat var="a" value="{!tradesmanAssignments}" id="assignmentlist">
+        			            <li>
+                                    <h3>{!a.Tradesman__r.Name}</h3>
+                                    <p>{!a.Tradesman__r.Tradesman_Status__c}</p>
+                                    <p><strong>Status Date: </strong>&nbsp;<apex:outputField value="{!a.Tradesman__r.Tradesman_Status_Date__c}"/></p>
+                                    <p><strong>Status Duration: </strong>&nbsp;<apex:outputField value="{!a.Tradesman__r.Tradesman_Status_Duration__c}"/></p>
+        			            </li>
+                            </apex:repeat>
+    			        </ul>
+                    </apex:outputPanel> 	
+				</div>
+				<!--END ASSIGNED TRADESMEN PAGE CONTENT-->	
+
+				<!--ASSIGNED TRADESMEN PAGE FOOTER-->	
+				<div data-role="footer" data-position="fixed" data-id="mainFooter">
+					<div data-role="navbar" data-iconpos="left">
+						<ul>
+							<li><a href="#home" data-icon="home" data-transition="fade">Home</a></li>
+							<li><a href="{!URLFOR($Page.POC_VTTM_ActivityList)}" data-icon="grid" data-transition="fade" data-ajax="false" onclick="showLoadingModal()">Activities</a>
+							</li>
+							<li><a href="#where" data-icon="calendar" data-transition="fade">Calendar</a></li>
+						</ul>
+					</div>
+				</div>
+			    <!--END ASSIGNED TRADESMEN PAGE FOOTER-->	
+			</div>	
+			<!-- END ASSIGNED TRADESMEN PAGE -->
+
+
+			<!--ATTACHMENTS PAGE -->
+			<div data-role="page" data-theme="b" id="attachmentsPage" 
+					data-add-back-btn="true" data-back-btn-text="Back"
+					data-back-btn-theme="b">
+
+				<!--ATTACHMENTS PAGE HEADER-->	
+				<div data-role="header" data-id="myHeader" data-position="fixed" data-theme="a">
+					<h1>Attachments</h1>
+					<div data-role="navbar" data-id="main" data-iconpos="left">
+						<ul>
+							<li><a href="#currentPage" data-icon="info">Detail</a></li>			
+							<li><a href="#tradesmenPage" data-icon="search">Tradesmen</a></li>
+							<li><a href="#attachmentsPage" data-icon="grid" class="ui-btn-active ui-state-persist">Attachments</a></li>		
+						</ul>
+					</div>
+				</div>
+				<!--END ATTACHMENTS PAGE HEADER-->	
+			
+				<!--ATTACHMENTS PAGE CONTENT-->	
+				<div data-role="content">
+                    <apex:pageMessages rendered="{!renderErrorMessageOnMobile}"/>
+
+
+                    <ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="b">
+                        <apex:repeat value="{!WorkOrderAttachments}" var="att">
+                            <li data-role="list-divider">{!att.Name}</li>
+                            <li>{!$ObjectType.Attachment.Fields.Description.Label}:&nbsp;<apex:outputField value="{!att.Description}"/></li>
+                            <li><a href="{!URLFOR($Action.Attachment.Download, att.id)}">Download</a></li>
+                        </apex:repeat>
+                    </ul> 
+
+			        <ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="b">
+    					<apex:repeat value="{!Attachments}" var="att">
+                            <li data-role="list-divider">{!att.Name}</li>
+                            <li>{!$ObjectType.Attachment.Fields.Description.Label}:&nbsp;<apex:outputField value="{!att.Description}"/></li>
+                            <li><a href="{!URLFOR($Action.Attachment.Download, att.id)}">Download</a></li>           
+    					</apex:repeat>
+			        </ul> 	
+                    <br/><br/><br/>
+
+                    <a href="#uploadAttachmentsPage" data-role="button" data-icon="action" class="ui-btn-active ui-state-persist">Upload</a>
+				</div>
+				<!--END ATTACHMENTS PAGE CONTENT-->	
+
+				<!--ATTACHMENTS PAGE FOOTER-->	
+				<div data-role="footer" data-position="fixed" data-id="mainFooter">
+					<div data-role="navbar" data-iconpos="left">
+						<ul>
+							<li><a href="#home" data-icon="home" data-transition="fade">Home</a></li>
+							<li><a href="{!URLFOR($Page.POC_VTTM_ActivityList)}" data-icon="grid" data-transition="fade" data-ajax="false" onclick="showLoadingModal()">Activities</a>
+							</li>
+							<li><a href="#where" data-icon="calendar" data-transition="fade">Calendar</a></li>
+                        </ul>
+					</div>
+				</div>
+			    <!--END ATTACHMENTS PAGE FOOTER-->	
+			</div>	
+			<!-- END ATTACHMENTS PAGE -->
+
+            <!-- UPLOAD ATTACHMENTS PAGE -->
+            <div data-role="page" data-theme="b" id="uploadAttachmentsPage" 
+                data-add-back-btn="true" data-back-btn-text="Back"
+                data-back-btn-theme="b">
+
+                <!--ATTACHMENTS PAGE HEADER-->  
+                <div data-role="header" data-id="myHeader" data-position="fixed" data-theme="a">
+                    <h1>Activity Detail</h1>
+                    <div data-role="navbar" data-id="main" data-iconpos="left">
+                        <ul>
+                            <li><a href="#currentPage" data-icon="info">Detail</a></li>         
+                            <li><a href="#tradesmenPage" data-icon="search">Tradesmen</a></li>
+                            <li><a href="#attachmentsPage" data-icon="grid" class="ui-btn-active ui-state-persist">Attachments</a></li>     
+                        </ul>
+                    </div>
+                </div>
+                <!--END ATTACHMENTS PAGE HEADER-->
+
+                <!--ATTACHMENTS PAGE CONTENT--> 
+                <div data-role="content">
+                    <apex:form >
+                        <apex:inputFile value="{!attachmentFile.Body}" fileName="{!attachmentFile.Name}" />
+                        <apex:commandButton value="Upload" action="{!Upload}" onclick="showLoadingModal()"/>
+                    </apex:form>
+                </div>
+                <!--END ATTACHMENTS PAGE CONTENT-->
+
+                <!--ATTACHMENTS PAGE FOOTER-->  
+                <div data-role="footer" data-position="fixed" data-id="mainFooter">
+                    <div data-role="navbar" data-iconpos="left">
+                        <ul>
+                            <li><a href="#home" data-icon="home" data-transition="fade">Home</a></li>
+                            <li><a href="{!URLFOR($Page.POC_VTTM_ActivityList)}" data-icon="grid" data-transition="fade" data-ajax="false" onclick="showLoadingModal()">Activities</a>
+                            </li>
+                            <li><a href="#where" data-icon="calendar" data-transition="fade">Calendar</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!--END ATTACHMENTS PAGE FOOTER-->
+            </div>
+            <!-- END UPLOAD ATTACHMENTS PAGE -->
+		</apex:define>
+    </apex:composition>
+</apex:page>

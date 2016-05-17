@@ -1,0 +1,48 @@
+<apex:page standardController="Location__c" extensions="WellLocationequipmentHierarchyCtrlX" 
+    tabStyle="Location__c">
+
+    <apex:form >
+
+        <apex:pageBlock >
+            <apex:pageBlockButtons location="top">
+                <apex:commandLink action="{!URLFOR($Action.Equipment__c.Add_Equipment_Form, Location__c.Id)}" value="Add Equipment Form" target="_parent" styleClass="btn" style="text-decoration:none; padding:4x;"/>
+                <apex:commandLink action="{!URLFOR($Action.Equipment__c.Transfer_Equipment_to_this_Location, Location__c.Id)}" value="Transfer Equipment TO this Location" target="_parent" styleClass="btn" style="text-decoration:none; padding:4x;"/>
+                <apex:commandLink action="{!URLFOR($Action.Equipment__c.Transfer_Equipment_from_this_Location, Location__c.Id)}" value="Transfer Equipment FROM this Location" target="_parent" styleClass="btn" style="text-decoration:none; padding:4x;"/>
+            </apex:pageBlockButtons>
+
+            <apex:outputPanel id="emptyEquipmentMessage" rendered="{!EquipmentHierarchy == null || EquipmentHierarchy.Size == 0}">
+                <apex:outputText value="This location has no equipment to display"/>
+            </apex:outputPanel>
+            <apex:outputPanel id="equipmentHierarchy" rendered="{!EquipmentHierarchy != null && EquipmentHierarchy.Size > 0}">
+
+                <apex:pageBlockTable value="{!EquipmentHierarchyVisible}" var="node">
+                    <apex:column style="width:15px;">
+                        <apex:image value="{!IF(node.Closed, '/img/alohaSkin/setup/setup_plus_lev1.gif',  '/img/alohaSkin/setup/setup_minus_lev1.gif')}"  
+                                    rendered="{!node.HasChildren}"
+                                    width="11" height="11" 
+                                    styleClass="setupImage"
+                                    style="float:left;">
+                            <apex:actionSupport event="onclick" 
+                                                action="{!toggleNodeState}" 
+                                                immediate="true" 
+                                                reRender="equipmentHierarchy">
+                                <apex:param name="nodeId" value="{!node.equipment.Id}"/>
+                            </apex:actionSupport>
+                        </apex:image>                    
+                    </apex:column>
+
+
+                    <apex:column style="padding-left: {!node.level * 20}px;" headerValue="Equipment">
+                        <apex:outputLink value="/{!node.Equipment.Id}" target="_blank">{!node.Equipment.Name}</apex:outputLink>
+                    </apex:column>
+
+                    <apex:column style="padding-left: {!node.level * 20}px;" value="{!node.Equipment.Description_of_Equipment__c}"/>
+                    <apex:column style="padding-left: {!node.level * 20}px;" value="{!node.Equipment.Manufacturer__c}"/>
+                    <apex:column style="padding-left: {!node.level * 20}px;" value="{!node.Equipment.Model_Number__c}"/>
+                    <apex:column style="padding-left: {!node.level * 20}px;" value="{!node.Equipment.Manufacturer_Serial_No__c}"/>
+                    <apex:column style="padding-left: {!node.level * 20}px;" value="{!node.Equipment.Tag_Number__c}"/>
+                </apex:pageBlockTable>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

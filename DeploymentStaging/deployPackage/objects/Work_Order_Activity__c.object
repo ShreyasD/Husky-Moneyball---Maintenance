@@ -1,0 +1,871 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fieldSets>
+        <fullName>Details</fullName>
+        <description>Details</description>
+        <displayedFields>
+            <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Sub_Operation_Number__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Assigned_Vendor__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Work_Center__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Description__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Number_of_people__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Duration__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Duration_units__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Work__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Work_units__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Scheduled_Start_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Scheduled_Finish_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Location__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Equipment__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>System_Condition__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>System_Status__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>User_Status__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Recipient__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Unloading_Point__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Details</label>
+    </fieldSets>
+    <fields>
+        <fullName>Assigned_Text__c</fullName>
+        <description>List of names of assigned tradesman, populated by trigger on work_Order_Activity_Assignment__c object</description>
+        <externalId>false</externalId>
+        <label>Assigned To</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Assigned_Vendor__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Assigned Vendor</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Work Order Activities</relationshipLabel>
+        <relationshipName>Work_Order_Activities</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Auto_Assignment_Rule__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Auto Assignment Rule</label>
+        <referenceTo>Work_Order_Activity_Assignment_Rule__c</referenceTo>
+        <relationshipLabel>Work Order Activities</relationshipLabel>
+        <relationshipName>Work_Order_Activities</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Business_Unit__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Business Unit</label>
+        <referenceTo>Business_Unit__c</referenceTo>
+        <relationshipLabel>Work Order Activities</relationshipLabel>
+        <relationshipName>Work_Order_Activities</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Cause_Text__c</fullName>
+        <description>Detailed Description of Cause of Damage to Equipment Part</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Detailed Description of Cause of Damage to Equipment Part</inlineHelpText>
+        <label>Cause Description</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Cause__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Cause of Damage to Equipment Part</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Cause of Damage to Equipment Part</inlineHelpText>
+        <label>Cause</label>
+        <referenceTo>HOG_Cause__c</referenceTo>
+        <relationshipLabel>Work Order Activities</relationshipLabel>
+        <relationshipName>Work_Order_Activities</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Completed__c</fullName>
+        <externalId>false</externalId>
+        <label>Completed</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Daily_Logs__c</fullName>
+        <externalId>false</externalId>
+        <label>Daily Logs</label>
+        <summaryForeignKey>Work_Order_Activity_Log__c.Work_Order_Activity__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Damage_Text__c</fullName>
+        <description>Detailed description of Damage to Equipment Part</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Detailed description of Damage to Equipment Part</inlineHelpText>
+        <label>Damage Description</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Damage__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Damage</label>
+        <referenceTo>HOG_Damage__c</referenceTo>
+        <relationshipLabel>Work Order Activities</relationshipLabel>
+        <relationshipName>Work_Order_Activities</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Description_of_Equipment__c</fullName>
+        <externalId>false</externalId>
+        <formula>BLANKVALUE( 
+Equipment__r.Description_of_Equipment__c, 
+Maintenance_Work_Order__r.Equipment__r.Description_of_Equipment__c 
+)</formula>
+        <label>Description of Equipment</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Duration__c</fullName>
+        <externalId>false</externalId>
+        <label>Duration</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Duration_units__c</fullName>
+        <externalId>false</externalId>
+        <label>Duration units</label>
+        <length>3</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Equipment__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Equipment</label>
+        <referenceTo>Equipment__c</referenceTo>
+        <relationshipLabel>Work Order Activities</relationshipLabel>
+        <relationshipName>Work_Order_Activities</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Facility__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Facility</label>
+        <referenceTo>Facility__c</referenceTo>
+        <relationshipLabel>Work Order Activities</relationshipLabel>
+        <relationshipName>Work_Order_Activities</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Finished__c</fullName>
+        <externalId>false</externalId>
+        <label>Finished</label>
+        <summarizedField>Work_Order_Activity_Log__c.Finished_New__c</summarizedField>
+        <summaryForeignKey>Work_Order_Activity_Log__c.Work_Order_Activity__c</summaryForeignKey>
+        <summaryOperation>max</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Functional_Location_Description_SAP__c</fullName>
+        <description>&quot;Smar Location&quot; - Show functional location description from Activity level, if it is null - show functional location description from Work Order</description>
+        <externalId>false</externalId>
+        <formula>BLANKVALUE( 
+ Location__r.Name, 
+ BLANKVALUE(Maintenance_Work_Order__r.Location__r.Name,
+  BLANKVALUE(Maintenance_Work_Order__r.Facility__r.Name, Maintenance_Work_Order__r.Functional_Location_Description_SAP__c)
+  )
+)</formula>
+        <label>Functional Location Description</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location_Name__c</fullName>
+        <description>&quot;Smart Location Name&quot; - show activity location name if specified, otherwise show Work Order Location name</description>
+        <externalId>false</externalId>
+        <formula>BLANKVALUE( Location__r.Name ,  Maintenance_Work_Order__r.Location__r.Name )</formula>
+        <label>Location Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Location</label>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Work Order Activities</relationshipLabel>
+        <relationshipName>Work_Order_Activities</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Maintenance_Work_Order__c</fullName>
+        <externalId>false</externalId>
+        <label>Maintenance Work Order</label>
+        <referenceTo>HOG_Maintenance_Servicing_Form__c</referenceTo>
+        <relationshipLabel>Work Order Activities</relationshipLabel>
+        <relationshipName>Work_Order_Activities</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Number_of_assigned_people__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of assigned people</label>
+        <summaryFilterItems>
+            <field>Work_Order_Activity_Assignment__c.Rejected__c</field>
+            <operation>notEqual</operation>
+            <value>True</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Work_Order_Activity_Assignment__c.Work_Order_Activity__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Number_of_people__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of people</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Operating_District__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Operating District</label>
+        <referenceTo>Operating_District__c</referenceTo>
+        <relationshipLabel>Work Order Activities</relationshipLabel>
+        <relationshipName>Work_Order_Activities</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Operating_Field_AMU__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Operating Field (AMU)</label>
+        <referenceTo>Field__c</referenceTo>
+        <relationshipLabel>Work Order Activities</relationshipLabel>
+        <relationshipName>Work_Order_Activities</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Operation_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Operation Number</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Part_Key__c</fullName>
+        <externalId>false</externalId>
+        <label>Part Key</label>
+        <length>8</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Part__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Equipment Part Repaired</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Equipment Part Repaired</inlineHelpText>
+        <label>Part</label>
+        <referenceTo>HOG_Part__c</referenceTo>
+        <relationshipLabel>Work Order Activities</relationshipLabel>
+        <relationshipName>Work_Order_Activities</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Recipient__c</fullName>
+        <externalId>false</externalId>
+        <label>Recipient</label>
+        <length>12</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SAP_Assigned__c</fullName>
+        <description>Count of people assigned to this activity in SAP</description>
+        <externalId>false</externalId>
+        <label>SAP Assigned</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SAP_Deleted__c</fullName>
+        <externalId>false</externalId>
+        <formula>BEGINS( System_Status__c , &quot;DLT&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>SAP Deleted</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Scheduled_Finish_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Scheduled Finish Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Scheduled_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Scheduled Start Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Started__c</fullName>
+        <externalId>false</externalId>
+        <label>Started</label>
+        <summarizedField>Work_Order_Activity_Log__c.Started_New__c</summarizedField>
+        <summaryForeignKey>Work_Order_Activity_Log__c.Work_Order_Activity__c</summaryForeignKey>
+        <summaryOperation>min</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Status_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Status Reason</label>
+        <picklist>
+            <controllingField>Status__c</controllingField>
+            <picklistValues>
+                <fullName>Waiting on parts</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Waiting on information</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Waiting on repairs</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pulled off activity</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>New</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Scheduled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Started</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Started at Equipment</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Finished at Equipment</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Finished for the day</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>On Hold</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Sub_Operation_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Sub Operation Number</label>
+        <length>4</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>System_Condition__c</fullName>
+        <externalId>false</externalId>
+        <label>System Condition</label>
+        <length>1</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>System_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>System Status</label>
+        <length>40</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Time_Spent_Off_Equipment_Text__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISNULL(Travel_Time__c ), &quot;&quot;,
+
+IF(FLOOR(Travel_Time__c)=0, &quot;&quot;,
+TEXT(
+FLOOR(Travel_Time__c)
+) &amp;&quot; Hours &quot;)
+
+&amp;
+
+IF(ROUND(MOD((Travel_Time__c)*60,60),0)=0, &quot;&quot;,
+TEXT(
+ROUND(MOD((Travel_Time__c)*60,60),0)
+) &amp;&quot; Minutes &quot;)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Time Spent Off Equipment</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Time_Spent_On_Equipment_Text__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISNULL(Work_Time__c ), &quot;&quot;,
+
+IF(FLOOR(Work_Time__c)=0, &quot;&quot;,
+TEXT(
+FLOOR(Work_Time__c)
+) &amp;&quot; Hours &quot;)
+
+&amp;
+
+IF(ROUND(MOD((Work_Time__c )*60,60),0)=0, &quot;&quot;,
+TEXT(
+ROUND(MOD((Work_Time__c )*60,60),0)
+) &amp;&quot; Minutes &quot;)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Time Spent On Equipment</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Man_Hours_Text__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISNULL(Work_Time__c + Travel_Time__c ), &quot;&quot;,
+
+IF(FLOOR(Work_Time__c+ Travel_Time__c)=0, &quot;&quot;,
+TEXT(
+FLOOR(Work_Time__c + Travel_Time__c)
+) &amp;&quot; Hours &quot;)
+
+&amp;
+
+IF(ROUND(MOD((Work_Time__c + Travel_Time__c )*60,60),0)=0, &quot;&quot;,
+TEXT(
+ROUND(MOD((Work_Time__c + Travel_Time__c )*60,60),0)
+) &amp;&quot; Minutes &quot;)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Man Hours</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Man_Hours__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Man Hours (Hrs)</label>
+        <summarizedField>Work_Order_Activity_Log__c.Total_Man_Hours__c</summarizedField>
+        <summaryForeignKey>Work_Order_Activity_Log__c.Work_Order_Activity__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Travel_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Time Spent Off Equipment (hrs)</label>
+        <summarizedField>Work_Order_Activity_Log__c.TravelTime_New__c</summarizedField>
+        <summaryForeignKey>Work_Order_Activity_Log__c.Work_Order_Activity__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Unloading_Point__c</fullName>
+        <externalId>false</externalId>
+        <label>Unloading Point</label>
+        <length>25</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>User_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>User Status</label>
+        <length>40</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Vendor_Supervisor__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Vendor Supervisor</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Work Order Activities</relationshipLabel>
+        <relationshipName>Work_Order_Activities</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Work_Center__c</fullName>
+        <externalId>false</externalId>
+        <label>Work Center</label>
+        <length>8</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Work_Details__c</fullName>
+        <externalId>false</externalId>
+        <label>Work Details</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>8</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Work_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Time Spent On Equipment (hrs)</label>
+        <summarizedField>Work_Order_Activity_Log__c.WorkTime_New__c</summarizedField>
+        <summaryForeignKey>Work_Order_Activity_Log__c.Work_Order_Activity__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Work__c</fullName>
+        <externalId>false</externalId>
+        <label>Work</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Work_units__c</fullName>
+        <externalId>false</externalId>
+        <label>Work Units</label>
+        <length>3</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>sfxId__c</fullName>
+        <caseSensitive>true</caseSensitive>
+        <externalId>true</externalId>
+        <label>sfxId</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>source_system_id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>SAP ID to hock up integration</description>
+        <externalId>true</externalId>
+        <label>source system id</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <label>Work Order Activity</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Maintenance_Work_Order__c</columns>
+        <columns>Completed__c</columns>
+        <columns>Status__c</columns>
+        <columns>Status_Reason__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Activity Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Work Order Activities</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <webLinks>
+        <fullName>Time_Log_Entry</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Time Tracking</masterLabel>
+        <openType>sidebar</openType>
+        <page>VTT_ActivityDetailTimeLog</page>
+        <protected>false</protected>
+    </webLinks>
+</CustomObject>

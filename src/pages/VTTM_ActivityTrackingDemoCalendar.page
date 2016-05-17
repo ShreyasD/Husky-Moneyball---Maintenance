@@ -1,0 +1,19 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+
+	<ion-view view-title="Calendar">
+		<ion-content>
+			<div id="cal-legend">
+		        <ul>
+		            <li><span class="event-scheduled"></span>Scheduled</li>
+		            <li><span class="event-activitylog"></span>Worked</li>
+		            <li><span class="event-activitylog-complete"></span>Completed</li>
+		            <li><span class="event-activitylog-err"></span>Stale</li>
+		        </ul>
+		        <div style="clear:both;"><!--fix floats--></div>
+		    </div>
+
+			<div id='calendar' style="width:100%;"></div>
+		</ion-content>
+	</ion-view>
+	
+</apex:page>

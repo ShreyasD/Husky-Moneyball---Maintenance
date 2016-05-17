@@ -1,0 +1,14 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<font face="arial" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">{!HOG_Service_Rig_Program__c.Name} has been financially and technically approved. Please follow the link below and create a work order for the following Service Rig Program in SAP.</font><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial">Well Location:<span class="Apple-tab-span" style="white-space:pre">	</span></font><span style="font-size: 12pt;">{!HOG_Service_Rig_Program__c.Well_Location_Name__c}</span></div><div><font face="arial" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Oil Per Day:<span class="Apple-tab-span" style="white-space:pre">	</span></font><font face="arial"><span style="font-size: 12pt;">{!HOG_Service_Rig_Program__c.</span>PVR_AVGVOL_5D_OIL__c<span style="font-size: 12pt;">}</span></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><a href="{!HOG_Service_Rig_Program__c.Link}">{!HOG_Service_Rig_Program__c.Link}</a><br></div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[]]></td>
+</tr>
+</table>

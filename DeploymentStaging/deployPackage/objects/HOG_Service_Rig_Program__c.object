@@ -1,0 +1,1071 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <content>DEFT_ServiceRigProgramLaunch</content>
+        <skipRecordTypeSelect>true</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>true</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>An encapsulating object for Service Rig Prgram information needed for an approval process to begin work on a a Service Rig.</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>Approval_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF($UserRole.DeveloperName == &apos;Production_Coordinators&apos;, &apos;Financial Approval&apos;, IF($UserRole.DeveloperName == &apos;Service_Rig_Coordinator&apos;, &apos;Technical Approval&apos;, &apos;&apos;))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Approval Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Business_Unit__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Business Unit</label>
+        <referenceTo>Business_Unit__c</referenceTo>
+        <relationshipLabel>Service Rig Programs</relationshipLabel>
+        <relationshipName>Service_Rig_Programs</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>CW_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(HOG_Service_Request_Notification_Form__r.Location_Lookup__r.Current_Well_Status__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>CW Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Current_Well_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>Well_Location__r.Statusicon__c</formula>
+        <label>Current Well Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Facility__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Facility</label>
+        <referenceTo>Facility__c</referenceTo>
+        <relationshipLabel>Service Rig Programs</relationshipLabel>
+        <relationshipName>Service_Rig_Programs</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Field_Senior__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Field Senior</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Service_Rig_Programs4</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>H2S_Test__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(H2S__c == &apos;Y&apos;, &apos;Hazardous H2S on site&apos;, &apos;&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>H2S Test</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>H2S__c</fullName>
+        <externalId>false</externalId>
+        <formula>Well_Location__r.Hazardous_H2S__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>H2S</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>HOG_Service_Request_Notification_Form_Id__c</fullName>
+        <description>Just for OnClickButton.</description>
+        <externalId>false</externalId>
+        <formula>HOG_Service_Request_Notification_Form__r.Id</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>HOG_Service_Request_Notification_Form_Id</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>HOG_Service_Request_Notification_Form__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <description>Foreign Key to Service Notification Request.</description>
+        <externalId>false</externalId>
+        <label>Service Notification Request</label>
+        <referenceTo>HOG_Service_Request_Notification_Form__c</referenceTo>
+        <relationshipLabel>Service Rig Programs</relationshipLabel>
+        <relationshipName>Service_Rig_Programs</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Notification_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>HOG_Service_Request_Notification_Form__r.Notification_Number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Notification Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Operating_District__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Operating District</label>
+        <referenceTo>Operating_District__c</referenceTo>
+        <relationshipLabel>Service Rig Programs</relationshipLabel>
+        <relationshipName>Service_Rig_Programs</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Operating_Field_AMU__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Operating Field (AMU)</label>
+        <referenceTo>Field__c</referenceTo>
+        <relationshipLabel>Service Rig Programs</relationshipLabel>
+        <relationshipName>Service_Rig_Programs</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Operations_Coordinator__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Operations Coordinator</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Service_Rig_Programs5</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Operator_Route__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Operator Route</label>
+        <referenceTo>Route__c</referenceTo>
+        <relationshipLabel>Service Rig Programs</relationshipLabel>
+        <relationshipName>Service_Rig_Programs</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>PVR_AVGVOL_5D_COND__c</fullName>
+        <externalId>false</externalId>
+        <formula>HOG_Service_Request_Notification_Form__r.PVR_AVGVOL_5D_COND__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>5 Days Condensate (m3)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PVR_AVGVOL_5D_GAS__c</fullName>
+        <externalId>false</externalId>
+        <formula>HOG_Service_Request_Notification_Form__r.PVR_AVGVOL_5D_GAS__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>5 Days Gas (m3)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PVR_AVGVOL_5D_LAST_MEASURED__c</fullName>
+        <externalId>false</externalId>
+        <formula>HOG_Service_Request_Notification_Form__r.PVR_AVGVOL_5D_LAST_MEASURED__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>5 Days Last Measured Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>PVR_AVGVOL_5D_NO_OF_MEASURES__c</fullName>
+        <externalId>false</externalId>
+        <formula>HOG_Service_Request_Notification_Form__r.PVR_AVGVOL_5D_NO_OF_MEASURES__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>5 Days Number Of Measures</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PVR_AVGVOL_5D_OIL__c</fullName>
+        <externalId>false</externalId>
+        <formula>HOG_Service_Request_Notification_Form__r.PVR_AVGVOL_5D_OIL__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>5 Days Oil (m3)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PVR_AVGVOL_5D_PROD__c</fullName>
+        <externalId>false</externalId>
+        <formula>HOG_Service_Request_Notification_Form__r.PVR_AVGVOL_5D_PROD__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>5 Days Production (m3)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PVR_AVGVOL_5D_SAND__c</fullName>
+        <externalId>false</externalId>
+        <formula>HOG_Service_Request_Notification_Form__r.PVR_AVGVOL_5D_SAND__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>5 Days Sand (m3)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PVR_AVGVOL_5D_WATER__c</fullName>
+        <externalId>false</externalId>
+        <formula>HOG_Service_Request_Notification_Form__r.PVR_AVGVOL_5D_WATER__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>5 Days Water (m3)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PVR_AVGVOL_UPDATED__c</fullName>
+        <externalId>false</externalId>
+        <formula>Well_Location__r.PVR_AVGVOL_UPDATED__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>PVR Average Last Updated</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Partner_Well__c</fullName>
+        <externalId>false</externalId>
+        <label>Partner Well?</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Priority__c</fullName>
+        <externalId>false</externalId>
+        <formula>HOG_Service_Request_Notification_Form__r.HOG_Notification_Type_Priority__r.Priority_Description__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Priority</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Production_Coordinator__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Production coordinator whose financial approval is required for Approval.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Set this as the user who can grant financial approval to this Service Rig Program.</inlineHelpText>
+        <label>Production Coordinator</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>User.UserRole.DeveloperName</field>
+                <operation>equals</operation>
+                <value>Production_Coordinators</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Service_Rig_Programs</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Production_Engineer__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Production Engineer</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Service_Rig_Programs3</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Production_Manager__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Production Manager</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Service_Rig_Programs2</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Rig_Program_Number__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>false</externalId>
+        <label>Rig Program #</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Route_Operator_1__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Route Operator 1</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Service_Rig_Programs7</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Route_Operator_2__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Route Operator 2</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Service_Rig_Programs8</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Route_Operator_3__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Route Operator 3</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Service_Rig_Programs9</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Route_Operator_4__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Route Operator 4</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Service_Rig_Programs6rHW</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Service_Rig_Coordinator__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>User who can grant technical approval for the Service Rig Program.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Set this to an User who can grant Technical Approval for the Service Rig Program.</inlineHelpText>
+        <label>Service Rig Coordinator</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>User.UserRole.DeveloperName</field>
+                <operation>equals</operation>
+                <value>Service_Rig_Coordinator</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Service_Rig_Programs1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Service_Rig_Planner__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Service Rig Planner</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>$Profile.Name</field>
+                <operation>equals</operation>
+                <value>Standard HOG - Administrator, Standard HOG - General User, System Administrator</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Service_Rig_Programs6</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Service_Rig_Program_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>Service Rig Program Comments</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Service_Rig_Request_Reason__c</fullName>
+        <externalId>false</externalId>
+        <formula>HOG_Service_Request_Notification_Form__r.HOG_Work_Order_Type__r.Service_Type__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Service Rig Request Reason</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Service_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>HOG_Service_Request_Notification_Form__r.HOG_Work_Order_Type__r.HOG_Notification_Type__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Service Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Service Rig Program Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>New</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Started</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>On Hold</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Awaiting Approval</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Surface_Location__c</fullName>
+        <externalId>false</externalId>
+        <formula>HOG_Service_Request_Notification_Form__r.Location_Lookup__r.Surface_Location__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Surface Location</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Vendor_Company__c</fullName>
+        <externalId>false</externalId>
+        <formula>HOG_Service_Request_Notification_Form__r.Vendor_Company__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Vendor Company</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Well_Down_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>HOG_Service_Request_Notification_Form__r.Well_down__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Well Down Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Well_Event_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>HOG_Service_Request_Notification_Form__r.Functional_Location_Status__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Well Event Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Well_Event__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <description>Foreign Key to Location.</description>
+        <externalId>false</externalId>
+        <label>Well Event</label>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Service Rig Programs</relationshipLabel>
+        <relationshipName>Service_Rig_Programs</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Well_Location_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>HOG_Service_Request_Notification_Form__r.Location_Lookup__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Well Location Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Well_Location__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>A lookup for Well Location Detail to be displayed on the Service Rig Program page layout as a mini page layout for the appropriate well location layout.</description>
+        <externalId>false</externalId>
+        <label>Well Location</label>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Service Rig Programs (Well Location)</relationshipLabel>
+        <relationshipName>Service_Rig_Programs1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Well_Orientation__c</fullName>
+        <externalId>false</externalId>
+        <formula>HOG_Service_Request_Notification_Form__r.Location_Lookup__r.Well_Orientation__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Well Orientation</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Well_Status_Reason__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(HOG_Service_Request_Notification_Form__r.Well_Tracker__r.Well_Status_Reason__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Well Status Reason</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Work_Details__c</fullName>
+        <externalId>false</externalId>
+        <label>Work Details</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Work_Order__c</fullName>
+        <externalId>false</externalId>
+        <label>Work Order #</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Service Rig Program</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Status__c</columns>
+        <columns>HOG_Service_Request_Notification_Form__c</columns>
+        <columns>Well_Event__c</columns>
+        <columns>Production_Coordinator__c</columns>
+        <columns>Service_Rig_Coordinator__c</columns>
+        <columns>Production_Engineer__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>SRP-{0000000000}</displayFormat>
+        <label>Service Rig Program Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Service Rig Programs</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Approved_Service_Rig_Program</fullName>
+        <active>true</active>
+        <description>Record Type for an Approved Service Rig Program</description>
+        <label>Approved Service Rig Program</label>
+        <picklistValues>
+            <picklist>Partner_Well__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Awaiting Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On Hold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Started</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>New_Service_Rig_Program</fullName>
+        <active>true</active>
+        <description>Default record type for Service Rig Program.</description>
+        <label>New Service Rig Program</label>
+        <picklistValues>
+            <picklist>Partner_Well__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Awaiting Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>On Hold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Started</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Pre_Approval_Service_Rig_Program</fullName>
+        <active>true</active>
+        <description>Default record type for Service Rig Program.</description>
+        <label>Pre Approval Service Rig Program</label>
+        <picklistValues>
+            <picklist>Partner_Well__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Awaiting Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>On Hold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Started</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Released_Service_Rig_Program</fullName>
+        <active>true</active>
+        <description>Record Type for a Released Service Rig Program</description>
+        <label>Released Service Rig Program</label>
+        <picklistValues>
+            <picklist>Partner_Well__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Awaiting Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>On Hold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Started</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>HOG_Service_Request_Notification_Form__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Well_Event__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Production_Coordinator__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Service_Rig_Coordinator__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Production_Engineer__c</customTabListAdditionalFields>
+        <excludedStandardButtons>New</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <lookupDialogsAdditionalFields>HOG_Service_Request_Notification_Form__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Well_Event__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Status__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Production_Coordinator__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Service_Rig_Coordinator__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Production_Engineer__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>HOG_Service_Request_Notification_Form__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Well_Event__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Status__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Production_Coordinator__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Service_Rig_Coordinator__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Production_Engineer__c</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>HOG_Service_Request_Notification_Form__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Well_Event__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Production_Coordinator__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Service_Rig_Coordinator__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Production_Engineer__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Approval_Status_Validation</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISCHANGED(Status__c) &amp;&amp;
+(ISPICKVAL(Status__c, &apos;Awaiting Approval&apos;) || ISPICKVAL(Status__c, &apos;Approved&apos;))</errorConditionFormula>
+        <errorMessage>Cannot manually trigger Approval Workflow statuses (Awaiting Approval, Approved).</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Status_Validation_Rule</fullName>
+        <active>true</active>
+        <errorConditionFormula>IF(ISCHANGED(Status__c),
+(ISPICKVAL(Status__c, &apos;New&apos;) &amp;&amp; !ISNEW()) ||
+(ISPICKVAL(Status__c, &apos;Started&apos;) &amp;&amp; (TEXT(PRIORVALUE(Status__c)) &lt;&gt; &apos;New&apos; &amp;&amp;  TEXT(PRIORVALUE(Status__c)) &lt;&gt; &apos;On Hold&apos;)) ||
+(ISPICKVAL(Status__c, &apos;On Hold&apos;) &amp;&amp; (TEXT(PRIORVALUE(Status__c)) &lt;&gt; &apos;New&apos; &amp;&amp;  TEXT(PRIORVALUE(Status__c)) &lt;&gt; &apos;Started&apos; &amp;&amp; TEXT(PRIORVALUE(Status__c)) &lt;&gt; &apos;Awaiting Approval&apos;)) ||
+(ISPICKVAL(Status__c, &apos;Cancelled&apos;) &amp;&amp; (TEXT(PRIORVALUE(Status__c)) &lt;&gt; &apos;New&apos; &amp;&amp;  TEXT(PRIORVALUE(Status__c)) &lt;&gt; &apos;Started&apos; &amp;&amp; TEXT(PRIORVALUE(Status__c)) &lt;&gt; &apos;On Hold&apos; &amp;&amp; TEXT(PRIORVALUE(Status__c)) &lt;&gt; &apos;Awaiting Approval&apos;)),
+false)</errorConditionFormula>
+        <errorMessage>Rig Program status should be: New (Once the notification is created), Started (after New or On Hold), On Hold (After New, Awaiting Approval or Started), Cancelled (After New, On Hold. Awaiting Approval or Started)</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Create_Service_Rig_Work_Order</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Create Service Rig Work Order</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/29.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/29.0/apex.js&quot;)}
+
+if(isAssociatedProductionEngineer() || isRole(&quot;Service_Rig_Planner&quot;)) {
+    var releasedRecordTypeId = getReleasedServiceRigProgramRecordTypeId();
+
+    var messageReturn = sforce.apex.execute(&quot;ServiceNotificationRequestGlobal&quot;,&quot;createServiceRigWorkOrder&quot;,
+                        {serviceRigProgramId:&quot;{!HOG_Service_Rig_Program__c.Id}&quot;, 
+                         notificationServicingFormId:&quot;{!HOG_Service_Rig_Program__c.HOG_Service_Request_Notification_Form_Id__c}&quot;,
+                         serviceRigProgramRecordTypeId:releasedRecordTypeId}
+                        );
+
+    if(!messageReturn || /^\s*$/.test(messageReturn)) {
+        alert(&quot;Well Servicing Work Order successfully created!!&quot;);
+    } else {
+        alert(&quot;Error: &quot; + messageReturn);
+    }
+
+    location.reload(true);
+} else {
+    alert(&quot;Only Production Engineer associated with this Service Rig Program or a Service Rig Planner are allowed to create a Service Rig Work Order.&quot;);
+    location.reload(true);
+}
+
+function getReleasedServiceRigProgramRecordTypeId() {
+    //Get Released Record Type
+    result = sforce.connection.query(&quot;Select Id, Name, DeveloperName &quot; +
+                                     &quot;From RecordType &quot; +
+                                     &quot;Where SObjectType = &apos;HOG_Service_Rig_Program__c&apos; &quot; +
+                                     &quot;And DeveloperName = &apos;Released_Service_Rig_Program&apos;&quot;);
+    records = result.getArray(&quot;records&quot;);
+    var releasedRecordType = records[0];
+
+    return releasedRecordType.Id;
+}
+
+function isRole(roleDeveloperName) {
+    var currentUser = sforce.connection.getUserInfo();
+
+    var result = sforce.connection.query(&quot;Select Id, DeveloperName from UserRole Where DeveloperName = &apos;&quot; + roleDeveloperName + &quot;&apos;&quot;);
+    var records = result.getArray(&quot;records&quot;);
+    var role = records[0];
+
+    return currentUser.roleId == role.Id;
+}
+
+function isAssociatedProductionEngineer() {
+    var currentUser = sforce.connection.getUserInfo();
+    return currentUser.userFullName == &quot;{!HOG_Service_Rig_Program__c.Production_Engineer__c}&quot;;
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Submit_for_Approval_Custom</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Submit for Approval</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/apex.js&quot;)} 
+
+        if ((Modal.confirm &amp;&amp; Modal.confirm(&apos;Once you submit this record for approval, you might not be able to edit it or recall it from the approval process depending on your settings. Continue?&apos;)) || (!Modal.confirm &amp;&amp; window.confirm(&apos;Once you submit this record for approval, you might not be able to edit it or recall it from the approval process depending on your settings. Continue?&apos;))) 
+            navigateToUrl(&apos;/p/process/Submit?retURL=%2F&apos; + {!HOG_Service_Rig_Program__c.Id} + &apos;&amp;id=&apos; + {!HOG_Service_Rig_Program__c.Id},&apos;DETAIL&apos;,&apos;submit&apos;);
+    }</url>
+    </webLinks>
+</CustomObject>

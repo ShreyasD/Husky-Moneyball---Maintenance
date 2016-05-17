@@ -1,0 +1,101 @@
+<apex:page controller="POC_VTTM_ActivityListController"  showHeader="false" sidebar="false" 
+standardStyleSheets="false" applyHtmlTag="false" applyBodyTag="false"
+docType="html-5.0">
+
+
+    <apex:composition template="POC_VTTM_Template">
+        <apex:define name="title">Activities</apex:define>
+        <apex:define name="head">
+            <!-- <apex:stylesheet value="{!URLFOR($Resource.gameListCSS)}"/> -->
+            <script type="text/javascript">
+            </script>
+        </apex:define>
+        <apex:define name="header">
+          <div data-role="header" data-id="main" data-iconpos="left">
+            <a href="/" data-ajax="false" data-icon="home">Home</a>
+            <h1>Activities</h1>
+          </div>
+        </apex:define>
+          <apex:define name="content">
+            <apex:form >
+              <!-- Action Functions for setting browser variables from Javascript-->
+              <apex:actionFunction action="{!SetIsMobileDevice}" name="SetIsMobileDevice" reRender="startWorkButtonPanel">
+                  <apex:param name="isMobileDevice" value=""/>
+              </apex:actionFunction>
+              <apex:actionFunction action="{!SetGeolocation}" name="SetGeolocation" reRender="startWorkButtonPanel">
+                  <apex:param name="latitude" value=""/>
+                  <apex:param name="longitude" value=""/>
+              </apex:actionFunction>
+
+
+              <div data-role="content" class="ui-content" role="main" data-theme="b">
+                  <div class="center-wrapper">
+                    <!--Start Work Button -->
+                    <apex:outputPanel layout="none" id="startWorkButtonPanel">
+                        
+                        <apex:actionFunction action="{!StartWork}" name="StartWork"/>
+
+                        <apex:outputPanel layout="none" id="startWorkButton" rendered="{!Tradesman.Tradesman_Start_Work_Enabled__c}"> 
+                          <a href="#" data-role="button" data-inline="true" 
+                          onclick="showLoadingModal(); StartWork();" class="{!IF(CanStartWork,'','ui-disabled')}">
+                          Start Work
+                          </a>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+
+                    <ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Search activities..." 
+                    data-theme="d" data-divider-theme="b" data-count-theme="e" >
+                      <li data-role="list-divider">Assigned Activities</li>
+
+                      <!-- <li data-role="list-divider">Activities</li> -->
+                      <apex:repeat var="a" value="{!assignedActivities}" id="list">
+                        <li>
+                            <a href="/apex/POC_VTTM_ActivityDetail?id={!a.id}" 
+                            data-transition="pop" 
+                            data-ajax="false" 
+                            onclick="showLoadingModal()">
+                              <h3>{!a.Maintenance_Work_Order__r.Name}</h3>
+                              <p><strong>{!a.Name}</strong></p>
+                              <p><strong>Route: </strong>&nbsp;<apex:outputField value="{!a.Maintenance_Work_Order__r.Location__r.Route__r.Route_Number__c}"/></p>
+                              <p><strong>Location: </strong>&nbsp;<apex:outputField value="{!a.Location_Name__c}"/></p>
+                              <p><strong>Scheduled: </strong>&nbsp;<apex:outputField value="{!a.Scheduled_Start_Date__c}"/></p>
+                              <p><strong>Status: </strong>&nbsp;<apex:outputField value="{!a.Status__c}"/></p>
+                            </a>
+                            <apex:outputPanel layout="none" rendered="{!Tradesman.Current_Work_Order_Activity__c=a.id}">
+                              <span class="ui-li-count" data-theme="e" ><h4>In Progress</h4></span>
+                            </apex:outputPanel>
+                        </li>
+                      </apex:repeat>
+                    </ul>
+
+                    <ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Search activities..." 
+                    data-theme="d" data-divider-theme="b" data-count-theme="e" >
+                      <li data-role="list-divider">All Activities</li>
+
+                      <!-- <li data-role="list-divider">Activities</li> -->
+                      <apex:repeat var="a" value="{!allActivities}" id="allActivitieslist">
+                        <li>
+                            <a href="/apex/POC_VTTM_ActivityDetail?id={!a.id}" 
+                            data-transition="pop" 
+                            data-ajax="false" 
+                            onclick="showLoadingModal()">
+                              <h3>{!a.Maintenance_Work_Order__r.Name}</h3>
+                              <p><strong>{!a.Name}</strong></p>
+                              <p><strong>Route: </strong>&nbsp;<apex:outputField value="{!a.Maintenance_Work_Order__r.Location__r.Route__r.Route_Number__c}"/></p>
+                              <p><strong>Location: </strong>&nbsp;<apex:outputField value="{!a.Location_Name__c}"/></p>
+                              <p><strong>Scheduled: </strong>&nbsp;<apex:outputField value="{!a.Scheduled_Start_Date__c}"/></p>
+                              <p><strong>Status: </strong>&nbsp;<apex:outputField value="{!a.Status__c}"/></p>
+                            </a>
+                            <apex:outputPanel layout="none" rendered="{!Tradesman.Current_Work_Order_Activity__c=a.id}">
+                              <span class="ui-li-count" data-theme="e" ><h4>In Progress</h4></span>
+                            </apex:outputPanel>
+                        </li>
+                      </apex:repeat>
+                    </ul>
+                  </div> 
+              </div>
+            </apex:form>
+          </apex:define>
+       <!--  <apex:define name="footer"/> -->
+    </apex:composition>
+</apex:page>

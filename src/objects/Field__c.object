@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <fields>
+        <fullName>Thermal_Facility__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Flag for indicating whether the Operating Field is a thermal facility.</description>
+        <externalId>false</externalId>
+        <label>Thermal Facility</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+</CustomObject>

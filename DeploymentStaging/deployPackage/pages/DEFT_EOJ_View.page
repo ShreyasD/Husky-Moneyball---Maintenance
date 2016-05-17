@@ -1,0 +1,39 @@
+<apex:page showHeader="false" sidebar="false" standardController="HOG_EOJ__c">
+	<apex:pageBlock mode="mainDetail">
+		<apex:pageBlockSection title="Well Information" columns="2">
+			<apex:outputField value="{!HOG_EOJ__c.Service_Rig_Program__r.Well_Location__r.Name}"/>
+			<apex:outputField value="{!HOG_EOJ__c.Service_Rig_Program__r.Well_Location__r.Well_Type__c}"/>
+
+			<apex:outputField value="{!HOG_EOJ__c.Service_Rig_Program__r.Well_Event__r.Name}"/>
+			<apex:outputField value="{!HOG_EOJ__c.Service_Rig_Program__r.Well_Orientation__c}"/>
+
+			<apex:outputField value="{!HOG_EOJ__c.Service_Rig_Program__r.Operating_Field_AMU__r.Name}"/>
+			<apex:outputField value="{!HOG_EOJ__c.Service_Rig_Program__r.H2S__c}"/>
+
+			<apex:outputField value="{!HOG_EOJ__c.Service_Rig_Program__r.Operator_Route__r.Name}"/>
+			<apex:outputField value="{!HOG_EOJ__c.Service_Rig_Program__r.Well_Location__r.Cost_Center__c}"/>
+				
+		</apex:pageBlockSection>
+
+		<apex:pageBlockSection title="Key Contacts" columns="2">
+			<apex:outputField value="{!HOG_EOJ__c.Service_Rig_Program__r.Production_Engineer__c}"/>
+			<apex:outputField value="{!HOG_EOJ__c.Service_Rig_Program__r.Service_Rig_Coordinator__c}"/>
+
+			<apex:outputField value="{!HOG_EOJ__c.Operator_On_Call__c}"/>
+<!-- 			<apex:outputText value="{!HOG_EOJ__c.Service_Rig_Program__r.Operator_Route__r.Operator_On_Call__r.Operator__r.Id}"/> -->
+			
+			<apex:outputField value="{!HOG_EOJ__c.Service_Rig_Program__r.Field_Senior__c}"/>
+		</apex:pageBlockSection>
+
+		<apex:pageBlockSection title="SNR Information" columns="2">
+			<apex:outputField value="{!HOG_EOJ__c.Service_Rig_Program__r.Notification_Number__c}"/>
+			<apex:outputField value="{!HOG_EOJ__c.Service_Rig_Program__r.HOG_Service_Request_Notification_Form__r.HOG_Work_Order_Type__r.Service_Type__c}"/>			
+
+			<apex:outputField value="{!HOG_EOJ__c.Service_Rig_Program__r.Service_Type__c}"/>
+			<!-- <apex:outputField value="{!HOG_EOJ__c.Service_Rig_Program__c}"/> -->	
+			
+			<apex:outputField value="{!HOG_EOJ__c.Service_Rig_Program__r.Priority__c}"/>
+		</apex:pageBlockSection>
+
+	</apex:pageBlock>
+</apex:page>

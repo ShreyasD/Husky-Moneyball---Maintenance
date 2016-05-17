@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+	<types>
+		<members>HOG_Cause__c</members>
+        <members>HOG_Damage__c</members>
+        <members>HOG_Part__c</members>
+        <members>HOG_Planner_Group_Notification_Type__c</members>
+        <members>HOG_Planner_Group__c</members>
+        <members>Work_Order_Activity_Assignment_Rule_Item__c</members>
+        <members>Work_Order_Activity_Assignment_Rule__c</members>
+        <members>Work_Order_Activity_Assignment__c</members>
+        <members>Work_Order_Activity_Log_Entry__c</members>
+        <members>Work_Order_Activity_Log__c</members>
+        <members>Work_Order_Activity_Search_Criteria__c</members>
+        <members>Work_Order_Activity__c</members>
+		<members>HOG_Interface_Monitoring_Settings__c</members>
+
+		<!--DEFT-->
+		<members>HOG_EOJ__c</members>
+        <members>HOG_Service_Rig_Program__c</members>
+		<name>CustomObject</name>
+	</types>
+	<types>
+		<members>Contact.Last_Work_Order_Activity__c</members>
+		<members>Contact.Tradesman_Still_Working__c</members>
+		<members>Contact.Tradesman_Start_Work_Enabled__c</members>
+		<members>Contact.Tradesman_Status_Coordinate__c</members>
+		<members>Field__c.Thermal_Facility__c</members>
+		<members>HOG_Settings__c.VTT_AssignedEmailNotificationDuration__c</members>
+		<members>HOG_Maintenance_Servicing_Form__c.VTT_Total_Time__c</members>
+		<members>HOG_Maintenance_Servicing_Form__c.Operator_Route__c</members>
+		<members>Well_Tracker__c.Category__c</members>
+		<name>CustomField</name>
+	</types>
+	<types>
+		<!--VTT-->
+		<members>Contact-Standard HOG Contact Layout</members>
+		<members>HOG_Planner_Group_Notification_Type__c-HOG Planner Group Notification Type Layout</members>
+		<members>Field__c-HOG - Primary Oil Layout</members>
+		<members>Field__c-Field Layout</members>
+		<members>Field__c-HOG - Control Room Centre Layout</members>
+		<members>Field__c-HOG - Master Operating Field Layout</members>
+		<members>Field__c-HOG - Primary Oil Layout</members>
+		<members>Field__c-HOG - Service Rigs</members>
+		<members>Field__c-HOG - Well Analyst Layout</members>
+		<members>Location__c-HOG - Maintenance Vendor Layout</members>
+		<members>Location__c-HOG - PVR Pilot Well ID Location Layout</members>
+		<members>Location__c-HOG - Standard Location Layout</members>
+		<members>Location__c-HOG - Standard Location Layout-MAIN SAP</members>
+		<members>Location__c-HOG - Standard Well ID Location Layout</members>
+
+		<!--DEFT-->
+		<members>HOG_EOJ__c-End of Job Report Layout - New</members>
+        <members>HOG_EOJ__c-End of Job Report Layout - Submitted</members>
+        <members>HOG_Service_Rig_Program__c-Service Rig Program Layout</members>
+        <members>HOG_Service_Rig_Program__c-Service Rig Program Layout - Approved</members>
+        <members>HOG_Service_Rig_Program__c-Service Rig Program Layout - New</members>
+        <members>HOG_Service_Rig_Program__c-Service Rig Program Layout - Pre Approval</members>
+        <members>HOG_Service_Rig_Program__c-Service Rig Program Layout - Released</members>
+		<name>Layout</name>
+	</types>
+	
+	<types>
+		<members>HOG_Activity_Time_Tracking</members>
+        <name>CustomApplication</name>
+    </types>
+	<types>
+		<members>Interface_Monitoring</members>
+		<members>Activity_Tracking_Mobile</members>
+		<name>CustomTab</name>
+	</types>
+	
+	<types>
+		<!--VTT-->
+		<members>POC_VTTM_ActivityDetail</members>
+		<members>POC_VTTM_ActivityList</members>
+		<members>POC_VTTM_Calendar</members>
+		<members>POC_VTTM_Template</members>
+		<members>VTTM_ActivityTrackingDemoAcivityDetail</members>
+		<members>VTTM_ActivityTrackingDemoActivities</members>
+		<members>VTTM_ActivityTrackingDemoCalendar</members>
+		<members>VTTM_ActivityTrackingDemoIndex</members>
+		<members>VTTM_ActivityTrackingDemoTabs</members>
+		<members>VTT_ActivityDetailTimeLog</members>
+		<members>VTT_ActivityListView</members>
+		<members>VTT_InterfaceMonitor</members>
+		<members>VTT_ManageAssignments</members>
+		<members>VTT_TradesmanAssignment</members>
+		<members>VTT_TradesmanCalendar</members>
+		<members>WellLocationEquipmentHierarchy</members>
+
+		<!--DEFT-->
+		<members>DEFT_ServiceRigProgramLaunch</members>
+		<members>DEFT_EOJ_View</members>
+
+		<name>ApexPage</name>
+	</types>
+	<types>
+		<members>RemoteTK</members>
+		<name>ApexComponent</name>
+	</types>
+	<types>
+		<!--VTT-->
+		<members>VTT_ActivityDetailTimeLogControllerX</members>
+		<members>VTT_ActivityDetailTimeLogControllerXTest</members>
+		<members>VTT_ActivityListController</members>
+		<members>VTT_ActivityListControllerTest</members>
+		<members>VTT_EmailNotifications</members>
+		<members>VTT_EmailNotificationSchedule</members>
+		<members>VTT_EmailNotificationsTest</members>
+		<members>VTT_InterfaceMonitorController</members>
+		<members>VTT_InterfaceMonitorControllerTest</members>
+		<members>VTT_InterfaceMonitorSchedule</members>
+		<members>VTT_InterfaceMonitorScheduleTest</members>
+		<members>VTT_ManageAssignmentsController</members>
+		<members>VTT_ManageAssignmentsControllerTest</members>
+		<members>VTT_TestData</members>
+		<members>VTT_TradesmanAssignmentControllerX</members>
+		<members>VTT_TradesmanAssignmentControllerXTest</members>
+		<members>VTT_TradesmanScheduleController</members>
+		<members>VTT_TradesmanScheduleControllerTest</members>
+		<members>VTT_Utilities</members>
+		<members>VTT_UtilitiesTest</members>
+		<members>VTT_WorkFlowEngine</members>
+		<members>VTT_WorkFlowEngineTest</members>
+		<members>POC_VTTM_ActivityListController</members>
+		<members>POC_VTTM_ActivityListControllerTest</members>
+		<members>RemoteTKController</members>
+		<members>DEFT_Utilities</members>
+		<members>DEFT_UtilitiesTest</members>
+		<members>DEFT_TestData</members>
+		<members>WellLocationequipmentHierarchyCtrlX</members>
+		<members>WellLocationEquipmentHierarchyCtrlXTest</members>
+		<name>ApexClass</name>
+	</types>
+	<types>
+		<members>VTT_ActivityAssignmentTrigger</members>
+		<members>VTT_ActivityLogEntryTrigger</members>
+		<members>VTT_ActivityTrigger</members>
+		<members>DEFT_EndOfJobTrigger</members>
+		<name>ApexTrigger</name>
+	</types>
+	<types>
+		<members>IonicLib</members>
+		<members>VTTM_ActivityTrackingDemo_App_js</members>
+		<members>VTTM_ActivityTrackingDemo_Controllers_js</members>
+		<members>VTTM_ActivityTrackingDemo_Services_js</members>
+		<name>StaticResource</name>
+	</types>
+	<types>
+        <members>HOG_Service_Rig_Program__c.Service_Rig_Program_Approval_Process</members>
+        <members>HOG_Service_Rig_Program__c.Service_Rig_Program_Approval_Process2</members>
+        <name>ApprovalProcess</name>
+    </types>
+    <types>
+        <members>HOG_EOJ__c</members>
+        <members>HOG_Service_Rig_Program__c</members>
+        <name>Workflow</name>
+    </types>
+    <types>
+        <members>HOG_Email_Templates/HOG_End_Of_Job_Report_Submitted</members>
+        <members>HOG_Email_Templates/HOG_Service_Program_is_going_to_end</members>
+        <members>HOG_Email_Templates/HOG_Service_Rig_Program_Approval_Request</members>
+        <members>HOG_Email_Templates/HOG_Service_Rig_Program_Created_Notification</members>
+        <members>HOG_Email_Templates/HOG_Service_Rig_Program_Overall_Approved</members>
+        <members>HOG_Email_Templates/HOG_Service_Rig_Program_Released_Notification</members>
+        <members>HOG_Email_Templates/HOG_Service_Rig_Program_Step_Approved</members>
+        <members>HOG_Email_Templates/HOG_Service_Rig_Program_Step_Rejected</members>
+        <name>EmailTemplate</name>
+    </types>
+    <types>
+    	<members>HOG_Maintenance_work_orders_w_activities</members>
+    	<members>HOG_Maintenance_Work_Orders</members>
+    	<name>ReportType</name>
+    </types>
+	<types>
+        <members>HOG_VTT_Admin</members>
+        <members>HOG_VTT_User</members>
+        <members>HOG_VTT_Vendor_Supervisor</members>
+
+        <!--DEFT-->
+        <members>HOG_SNR_User</members>
+        <members>HOG_Service_Rig_Program_Read_Write</members>
+        <members>HOG_Well_Site_Supervisor_New</members>
+
+        <members>HOG_Administrator</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+    	<members>Admin</members>
+    	<members>Standard HOG - General User</members>
+    	<members>Standard HOG - Administrator</members>
+    	<name>Profile</name>
+    </types>
+    <version>35.0</version>
+</Package>

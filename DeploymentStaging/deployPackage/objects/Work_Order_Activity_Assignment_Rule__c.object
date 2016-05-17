@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>false</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>false</enableSharing>
+    <enableStreamingApi>false</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>Active__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <label>Active</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Assigned_To_Vendor__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Assigned To Vendor</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Auto Assignment Rules</relationshipLabel>
+        <relationshipName>Work_Order_Activity_Assignment_Rules</relationshipName>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Assigned_people__c</fullName>
+        <externalId>false</externalId>
+        <label>Assigned people</label>
+        <summaryForeignKey>Work_Order_Activity_Assignment_Rule_Item__c.Rule__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>MAT_Code__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>This field accepts wildcard and/or multiple entries. 
+Ex. To use any MAT Code starting with a C, enter C*. For multiple entries, separate with a comma like BRK, RWK, VFY</inlineHelpText>
+        <label>MAT Code</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order_Type__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>This field accepts wildcard and/or multiple entries. 
+Ex. To use any Order Type starting with M, enter M*. For multiple entries, separate with a comma like MRX1, MPX1</inlineHelpText>
+        <label>Order Type</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Planner_Group__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>This field accepts wildcard and/or multiple entries. 
+Ex. To use any Planner Group starting with a 1, enter 1*. For multiple entries, separate with a comma like 100, 200, 300</inlineHelpText>
+        <label>Planner Group</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Plant_Section__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>This field accepts wildcard and/or multiple entries. 
+Ex. To use any Plant Section code starting with a 1, enter 1*. For multiple entries, separate with a comma like 101, 102, 103</inlineHelpText>
+        <label>Plant Section</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Priority__c</fullName>
+        <externalId>false</externalId>
+        <formula>1+
+IF( ISBLANK( MAT_Code__c ), 1, 0) 
++ IF( ISBLANK(  Unloading_Point__c), 1, 0)
++ IF( ISBLANK(  Order_Type__c ), 1, 0)
++ IF( ISBLANK(  Planner_Group__c ), 1, 0)
++ IF( ISBLANK(  Plant_Section__c  ), 1, 0)
++ IF( ISBLANK(   Recipient__c  ), 1, 0)
++ IF( ISBLANK(   Work_Center__c   ), 1, 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Priority</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Recipient__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>This field can only contain one entry and requires an exact match.</inlineHelpText>
+        <label>Recipient</label>
+        <length>12</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Supervisor__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Notify Vendor Supervisor when activity is assigned to this vendor</inlineHelpText>
+        <label>Notify Vendor Supervisor</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>$Source.Assigned_To_Vendor__c</field>
+                <operation>equals</operation>
+                <valueField>Contact.AccountId</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Auto Assignment Rules</relationshipLabel>
+        <relationshipName>Auto_Assignment_Rules</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Unloading_Point__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>This field can only contain one entry and requires an exact match.</inlineHelpText>
+        <label>Unloading Point</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Work_Center__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>This field accepts wildcard and/or multiple entries. 
+Ex. To use any Work Center starting with ELEC, enter ELEC*. For multiple entries, separate with a comma like ELEC100, ELEC200</inlineHelpText>
+        <label>Work Center</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>sfxId__c</fullName>
+        <caseSensitive>true</caseSensitive>
+        <externalId>true</externalId>
+        <label>sfxId</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <label>Auto Assignment Rule</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Description__c</columns>
+        <columns>MAT_Code__c</columns>
+        <columns>Order_Type__c</columns>
+        <columns>Planner_Group__c</columns>
+        <columns>Plant_Section__c</columns>
+        <columns>Recipient__c</columns>
+        <columns>Work_Center__c</columns>
+        <columns>Unloading_Point__c</columns>
+        <columns>Assigned_To_Vendor__c</columns>
+        <columns>Supervisor__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>Active__c</columns>
+        <columns>Priority__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Auto Assignment Rules</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

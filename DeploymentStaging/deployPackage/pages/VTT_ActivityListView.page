@@ -1,0 +1,528 @@
+<apex:page controller="VTT_ActivityListController" showHeader="true" title="Work Order Activities" sidebar="true" docType="html-5.0">
+    
+    <apex:includescript value="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" />      
+    <apex:includescript value="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true" />
+
+    <style>
+        .displayNone { 
+            display:none; 
+        }
+        .displayBlock {
+            display:block;
+        }
+        .ui-autocomplete-loading { 
+            background: white url(/img/loading32.gif) right center no-repeat;
+            background-size:15px 15px; 
+        }
+        .placeHolder {
+            font-style: italic;
+        }
+
+        /*Popup*/
+        .custPopup{
+            background-color: white;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            /* These are the 3 css properties you will need to change so the popup 
+            displays in the center of the screen. First set the width. Then set 
+            margin-left to negative half of what the width is. You can add 
+            the height property for a fixed size pop up if you want.*/
+            width: 350px;
+            margin-left: -250px;
+            top:100px;
+        }
+        .popupBackground{
+            background-color:black;
+            opacity: 0.20;
+            filter: alpha(opacity = 20);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }
+    </style>
+    <apex:outputPanel id="scriptPanel">
+        <script>
+            j$ = jQuery.noConflict();
+
+            j$( document ).ready(function() {
+              //checkMobileDevice();
+              //checkGeoLocation();
+              //SetBrowserVariables();
+            });
+
+            function checkMobileDevice() {
+                var agent = navigator.userAgent;      
+                var isWebkit = (agent.indexOf("AppleWebKit") > 0);      
+                var isIPad = (agent.indexOf("iPad") > 0);      
+                var isIOS = (agent.indexOf("iPhone") > 0 || agent.indexOf("iPod") > 0);     
+                var isAndroid = (agent.indexOf("Android")  > 0);     
+                var isNewBlackBerry = (agent.indexOf("AppleWebKit") > 0 && agent.indexOf("BlackBerry") > 0);     
+                var isWebOS = (agent.indexOf("webOS") > 0);      
+                var isWindowsMobile = (agent.indexOf("IEMobile") > 0);     
+                var isSmallScreen = (screen.width < 767 || (isAndroid && screen.width < 1000));     
+                var isUnknownMobile = (isWebkit && isSmallScreen);     
+                var isMobile = (isIOS || isAndroid || isNewBlackBerry || isWebOS || isWindowsMobile || isUnknownMobile);     
+                var isTablet = (isIPad || (isMobile && !isSmallScreen));     
+
+                if ( isMobile && isSmallScreen && document.cookie.indexOf( "mobileFullSiteClicked=") < 0 ){ 
+                    //SetIsMobileDevice('true');
+                    j$('input[id$=inputIsMobileDevice]').val(true);
+                }
+
+                //For testing only
+                //SetIsMobileDevice('true');
+            }
+
+            function checkGeoLocation()
+            {
+                if(!!navigator.geolocation){   
+                    navigator.geolocation.getCurrentPosition(
+                        function(position) {
+                            var geolocate = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                            //SetGeolocation(position.coords.latitude, position.coords.longitude);
+                            //alert(position);
+                            j$('input[id$=inputLatitude]').val(position.coords.latitude);
+                            j$('input[id$=inputLongitude]').val(position.coords.longitude);
+                            j$('input[id$=inputIsGeolocationAvailable]').val(true);
+                        }, 
+                        function(error) {
+                            alert("Geolocation has to be provided to Start Work.");
+                        }
+                    );
+                }
+            }
+
+            function checkAll(cb)
+            {
+                var inputElem = document.getElementsByTagName("input");
+                for(var i=0; i<inputElem.length; i++)
+                {
+                    if(inputElem[i].id.indexOf("checkedone")!=-1)
+                        inputElem[i].checked = cb.checked;
+                }
+            }    
+        </script>    
+    </apex:outputPanel>
+
+    <apex:actionstatus id="ajaxStatus">
+        <apex:facet name="start">
+            <div class="waitingSearchDiv" id="el_loading" style="background-color: rgb(54, 25, 25); background-color: rgba(25, 25, 25, .5); height: 100%;width:100%;">
+                <div class="waitingHolder" style="top: 200px; width: 200px; height: 40px; border:1px solid black;  background-color: white;">
+                    <p>
+                        <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                        <span class="waitingDescription">Please Wait...</span>
+                    </p>
+                </div>
+            </div>
+        </apex:facet> 
+    </apex:actionstatus>
+
+    <apex:sectionHeader title="Activity Tracking" subtitle="Work Order Activities"/>
+
+    <apex:form >
+        <apex:pageMessages id="errors" />
+
+        <!-- Action Functions for setting browser variables from Javascript-->
+        <!--<apex:actionFunction action="{!SetIsMobileDevice}" name="SetIsMobileDevice" 
+            rerender="resultPanel">
+            <apex:param name="isMobileDevice" value=""/>
+        </apex:actionFunction>
+        <apex:actionFunction action="{!SetGeolocation}" name="SetGeolocation" 
+            rerender="resultPanel">
+            <apex:param name="latitude" value=""/>
+            <apex:param name="longitude" value=""/>
+        </apex:actionFunction>-->
+        <apex:inputHidden value="{!isMobileDevice}" id="inputIsMobileDevice"/>
+        <apex:inputHidden value="{!isGeolocationAvailable}" id="inputIsGeolocationEnabled"/>
+        <apex:inputHidden value="{!currentLatitude}" id="inputLatitude"/>
+        <apex:inputHidden value="{!currentLongitude}" id="inputLongitude"/>
+        <apex:actionFunction action="{!SetBrowserVariables}" name="SetBrowserVariables" rerender="resultPanel, scriptPanel, debug, errors"/>
+
+        <!-- Start Work Popup -->
+        <apex:outputPanel id="startWorkPopup">
+            <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!showStartWorkPopup}"/>
+            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!showStartWorkPopup}">
+                <apex:pageBlock >
+                    <apex:pageBlockSection columns="1">
+                        <apex:outputText value="Are you sure you want to start work? Your start time and location will be recorded."/>
+                    </apex:pageBlockSection>
+                    <apex:pageBlockButtons location="bottom">
+                        <apex:commandButton value=" Yes " action="{!StartWork_End}" rerender="startWorkPopup,criteriaPanel, resultPanel, scriptPanel, debug, errors" style="margin-left:10px;">
+                            <apex:param name="yes" value="true" assignTo="{!startWorkConfirm}" />
+                        </apex:commandButton>
+                        <apex:commandButton value=" No " action="{!StartWork_End}" rerender="startWorkPopup" style="margin-left:10px;">
+                            <apex:param name="no" value="false" assignTo="{!startWorkConfirm}"/>
+                        </apex:commandButton>
+                    </apex:pageBlockButtons>
+                </apex:pageBlock>
+            </apex:outputPanel>
+        </apex:outputPanel>
+
+        <!-- Save Filter Pop Up -->
+        <apex:outputPanel id="saveFilterPopup">
+            <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!showSearchCriteriaNamePopUp}"/>
+            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!showSearchCriteriaNamePopUp}">
+                <apex:pageBlock >
+                    <apex:pageBlockSection >
+                        <apex:pageBlockSectionItem >
+                            <apex:outputPanel >
+                            <div class="requiredInput">
+                                <div class="requiredBlock"></div>
+                                <apex:inputText value="{!searchFilterName}" html-placeholder="Search Filter Name" />
+                            </div>
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+                    </apex:pageBlockSection>
+                    <apex:pageBlockButtons location="bottom">
+                        <apex:commandButton value=" Save " action="{!SaveFilter_End}" rerender="saveFilterPopup,criteriaPanel, resultPanel, scriptPanel, debug, errors" style="margin-left:10px;">
+                            <apex:param name="confirm" value="true" assignTo="{!saveConfirm}" />
+                        </apex:commandButton>
+                        <apex:commandButton value=" Cancel " action="{!SaveFilter_End}" rerender="saveFilterPopup" style="margin-left:10px;">
+                            <apex:param name="cancel" value="false" assignTo="{!saveConfirm}"/>
+                        </apex:commandButton>
+                    </apex:pageBlockButtons>
+                </apex:pageBlock>
+            </apex:outputPanel>
+        </apex:outputPanel>  
+
+        <table width="100%" border="0">
+          <tr>  
+            <td width="150" valign="top">
+                <apex:outputPanel id="criteriaPanel">  
+                <apex:pageBlock title="Criteria" mode="edit" id="criteria">   
+                <table cellpadding="2" cellspacing="2">
+
+                  <!-- <tr style="display:{!IF( IsAdmin==false , 'None', '')}"> -->
+                  <tr>
+                    <td style="font-weight:bold;">Vendor:<br/>
+                        <apex:selectList id="inputVendor" value="{!pageFilter.vendorFilter}" size="1" styleClass="form-control" style="width:95%" readonly="{!Not(IsAdmin)}" disabled="{!Not(IsAdmin)}">
+                            <apex:selectOptions value="{!vendorOptions}"/>
+                            <apex:actionSupport event="onchange" reRender="inputTradesman" action="{!PopulateTradesmanOptions}"/>   
+                        </apex:selectList>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td style="font-weight:bold;">Tradesman:<br/>
+                        
+                            <apex:selectList id="inputTradesman"  value="{!pageFilter.tradesmanFilter}" size="1" styleClass="form-control" style="width:95%">
+                                <apex:selectOptions value="{!tradesmanOptions}"/>
+                            </apex:selectList>
+                        
+                    </td>
+                  </tr>
+              
+    <!--               <tr>
+                    <td style="font-weight:bold;">Assigned to:<br/>
+                        <apex:selectList id="inputAssignment" value="{!assignedFilter}" size="1" styleClass="form-control" style="width:95%">
+                            <apex:selectOption itemValue="" itemLabel="- Any -"/>                                
+                            <apex:selectOption itemValue="1" itemLabel="Me"/>
+                            <apex:selectOption itemValue="2" itemLabel="My Company"/>
+                            <apex:selectOptions value="{!AssignedOptions}"/>
+                        </apex:selectList>
+                    </td>
+                  </tr>
+     -->
+                  <tr>
+                    <td style="font-weight:bold;">Scheduled:<br/>
+                        <apex:selectList id="inputScheduled" value="{!pageFilter.scheduledFilter}" size="1" styleClass="form-control" style="width:95%">
+                            <apex:selectOption itemValue="" itemLabel="- Any -"/>                                
+                            <apex:selectOption itemValue="TODAY" itemLabel="Today"/>
+                            <apex:selectOption itemValue="TOMORROW" itemLabel="Tomorrow"/>
+                            <apex:selectOption itemValue="THIS_WEEK" itemLabel="This Week"/>
+                            <apex:selectOption itemValue="NEXT_WEEK" itemLabel="Next Week"/>
+                            <apex:selectOption itemValue="THIS_MONTH" itemLabel="This Month"/>
+                            <apex:selectOption itemValue="NEXT_MONTH" itemLabel="Next Month"/>
+                            <apex:selectOption itemValue="YESTERDAY" itemLabel="Yesterday"/>
+                            <apex:selectOption itemValue="LAST_WEEK" itemLabel="Last Week"/>
+                            <apex:selectOption itemValue="LAST_MONTH" itemLabel="Last Month"/>
+                        </apex:selectList>
+                    </td>
+                  </tr>  
+
+                  <tr>
+                    <td style="font-weight:bold;">AMU:<br/>
+                        <apex:selectList id="amuList" value="{!pageFilter.amuFilter}" size="1" styleClass="form-control" style="width:95%">
+                            <apex:selectOptions value="{!amuOptions}"/>
+                        </apex:selectList>
+                    </td>
+                  </tr> 
+
+                  <tr>
+                    <td style="font-weight:bold;">Operating Route:<br/>
+                        <apex:inputtext value="{!pageFilter.routeFilter}" style="width:95%"/>
+                    </td>
+                  </tr> 
+
+                  <tr>
+                    <td style="font-weight:bold;">Planner Group:<br/>
+                        <apex:inputtext value="{!pageFilter.plannerGroupFilter}" style="width:95%"/>
+                    </td>
+                  </tr> 
+
+                  <tr>
+                    <td style="font-weight:bold;">Order Type:<br/>
+                        <!-- <apex:inputtext value="{!orderTypeFilter}" style="width:95%"/> -->
+
+                        <apex:selectList value="{!pageFilter.orderTypeFilter}" size="1" styleClass="form-control" style="width:95%">
+                            <apex:selectOption itemValue="" itemLabel="- Any -"/>                                
+                            <apex:selectOption itemValue="MEC1" itemLabel="MEC1"/>
+                            <apex:selectOption itemValue="MEX1" itemLabel="MEX1"/>
+                            <apex:selectOption itemValue="MPC1" itemLabel="MPC1"/>
+                            <apex:selectOption itemValue="MPX1" itemLabel="MPX1"/>
+                            <apex:selectOption itemValue="MRC1" itemLabel="MRC1"/>
+                            <apex:selectOption itemValue="MRX1" itemLabel="MRX1"/>
+                            <apex:selectOption itemValue="GNX1" itemLabel="GNX1"/>
+                        </apex:selectList>                    
+                    </td>
+                  </tr> 
+
+                  <tr>
+                    <td style="font-weight:bold;">Priority (0-9, A-Z):<br/>
+                        <apex:inputtext value="{!pageFilter.priorityFilter}" style="width:95%"/>
+                    </td>
+                  </tr> 
+
+                  <tr>
+                    <td style="font-weight:bold;">Work Center:<br/>
+                        <apex:inputtext value="{!pageFilter.workCenterFilter}" style="width:95%"/>
+                    </td>
+                  </tr> 
+
+                  <tr>
+                    <td style="font-weight:bold;">Work Order Status:<br/>
+                        <apex:inputtext value="{!pageFilter.workOrderStatusFilter}" style="width:95%"/>
+                    </td>
+                  </tr> 
+
+                  <tr>
+                    <td style="font-weight:bold;">Activity Status:<br/>
+                        <apex:selectList id="statusList" value="{!pageFilter.activityMultiStatusFilter}" multiselect="true" size="4" styleClass="form-control" style="width:95%">
+                            <!--<apex:selectOption itemValue="" itemLabel="- Any -"/>-->
+                            <apex:selectOptions value="{!ActivityStatuses}"/>
+                        </apex:selectList>
+                    </td>
+                  </tr> 
+
+                  <tr>              
+                    <td style="font-weight:bold;">Hide Completed: <apex:inputCheckbox value="{!pageFilter.hideCompletedFilter}"/>              
+                    </td>
+                  </tr>     
+
+                  <tr>              
+                    <td style="font-weight:bold;">Hide Order Hold: <apex:inputCheckbox value="{!pageFilter.hideONHOLDFilter}"/>              
+                    </td>
+                  </tr>    
+
+
+                  <tr>
+                    <td style="font-weight:bold;"> <!--Name:<br/>-->
+                        <apex:inputtext id="inputLocationName" styleClass="form-control" html-placeholder="Any text" value="{!pageFilter.filterName}" style="width:95%"/>
+                    </td>
+                  </tr> 
+                  <tr>
+                    <td>
+                        <apex:commandButton value=" Search " action="{!RefreshData}" tabindex="0" 
+                        status="ajaxStatus" rerender="resultPanel, scriptPanel, debug, errors"/>
+                        <apex:commandButton value=" Clear  " action="{!ClearLastSelectedFilter}" 
+                        status="ajaxStatus" rerender="criteriaPanel, resultPanel, scriptPanel, debug, errors"/>
+                    </td>
+                  </tr>
+                  <!--<tr>
+                    <td>
+                        <apex:commandButton value="Job In Progress" action="{!JobInProgress}" rendered="{!Tradesman.Current_Work_Order_Activity__c<> null}"/>
+                    </td>
+                  </tr> -->
+                  
+                  <apex:outputPanel layout="none" rendered="{!OR(IsAdmin, IsVendorSupervisor)}">
+                      <tr>
+                        <td>
+                            <apex:commandButton value=" Save Filter " action="{!SaveFilter_Start}" />
+                        </td>
+                      </tr>
+                  </apex:outputPanel>
+                  </table>                
+                </apex:pageBlock>
+                
+                <apex:pageBlock rendered="{!OR(IsAdmin, IsVendorSupervisor)}">
+                    <table cellpadding="2" cellspacing="2">
+                        <tr>
+                            <td>
+                                <apex:selectList id="filterList" value="{!selectedFilterId}" size="1" styleClass="form-control" style="width:100%">
+                                    <apex:selectOptions value="{!SearchFilterOptions}"/>
+                                    <apex:actionSupport event="onchange" action="{!FilterChanged}" rerender="criteriaPanel, resultPanel, scriptPanel, debug, errors" status="ajaxStatus">
+                                    </apex:actionSupport>
+                                </apex:selectList>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <apex:commandButton value=" Delete Filter " action="{!DeleteFilter}" onClick="if(!confirm('Are you sure you want to delete this search filter?')){return false};"/>
+                            </td>
+                        </tr>
+                    </table>
+                </apex:pageBlock>
+                </apex:outputPanel>
+            </td>
+            <td valign="top">    
+                <apex:outputPanel id="resultPanel">        
+                    <apex:pageBlock id="resultPageBlock">
+                        <apex:pageBlockButtons location="top" id="buttonPanel">
+                            <apex:outputPanel layout="none" id="startWorkButtonPanel">
+                                <apex:commandButton value="Start Work" action="{!StartWork_Start}" disabled="{!NOT(CanStartWork)}" rendered="{!Tradesman.Tradesman_Start_Work_Enabled__c}"/>
+                                    <!--rendered="{!AND(isMobileDevice, isGeolocationAvailable)}"/>-->
+                            </apex:outputPanel>
+
+                        
+                            <apex:commandButton value="Job In Progress" action="{!JobInProgress}" rendered="{!Tradesman.Current_Work_Order_Activity__c<> null}"/>
+
+                            <apex:commandButton value="Manage Assignments" action="{!ManageAssignments}" 
+                            status="ajaxStatus" rendered="{!OR(IsAdmin, IsVendorSupervisor)}"
+                            rerender="criteriaPanel, resultPanel, scriptPanel, debug, errors"/>
+
+                            <apex:commandButton value="Run Auto Assignments" action="{!RunAutoAssignments}" 
+                            status="ajaxStatus" rendered="{!IsAdmin}" 
+                            rerender="criteriaPanel, resultPanel, scriptPanel, debug, errors"/>
+                        </apex:pageBlockButtons>
+
+                        <!-- pagination controls -->
+                        <c:DynamicPaginator pController="{!controller}" panel="resultPanel"/>
+
+                        <!-- list view -->
+                        <apex:pageBlockTable value="{!currentPageActivities}" var="rec">
+                            <apex:column width="10px;" rendered="{!Or(isAdmin, isVendorSupervisor)}">
+                                <apex:facet name="header"> 
+                                <apex:inputCheckbox value="{!AllRecordsSelected}">
+                                    <apex:actionSupport event="onchange" action="{!GetSelected}"  onsubmit="checkAll(this)" rerender="resultTable,messages,criteriaPanel"/>
+                                </apex:inputCheckbox>
+                                </apex:facet>
+                                <!--
+                                <apex:facet name="footer"> 
+                                    <apex:commandButton value="Download" action="{!DownloadSelectedInvoices}" rerender="messages" />
+                                </apex:facet>
+                                -->    
+                                <apex:inputCheckbox value="{!rec.selected}" id="checkedone">
+                                    <apex:actionSupport event="onchange" action="{!GetSelected}" rerender="resultTable, messages,criteriaPanel"/>
+                                </apex:inputCheckbox>
+                            </apex:column>
+
+                            <apex:column >
+                                <apex:facet name="header">
+                                    <c:SortHeader sController="{!controller}" header="Work Order" column="Maintenance_Work_Order__c" panel="resultPanel"/>
+                                </apex:facet> 
+                                <apex:outputField value="{!rec.ActivityObject.Maintenance_Work_Order__c}"/>
+                            </apex:column>
+
+                            <apex:column >
+                                <apex:facet name="header">
+                                    <c:SortHeader sController="{!controller}" header="Activity" column="Name" panel="resultPanel"/>
+                                </apex:facet> 
+        <!--                         <apex:outputLink value="{!URLFOR($Action.Work_Order_Activity__c.View, rec.id)}"> {!rec.Name}
+                                </apex:outputLink>  -->
+
+                                <apex:outputLink value="{!$Page.VTT_ActivityDetailTimeLog}?id={!rec.ActivityObject.Id}&filter={!PageFilterString}">
+                                {!rec.ActivityObject.Name}
+                                </apex:outputLink>
+                            </apex:column>   
+                      
+                            
+
+
+
+                            <apex:column >
+                                <apex:facet name="header">
+                                    <c:SortHeader sController="{!controller}" header="Order Type" column="Maintenance_Work_Order__r.Order_Type__c" panel="resultPanel"/>
+                                </apex:facet>
+                                <apex:outputField value="{!rec.ActivityObject.Maintenance_Work_Order__r.Order_Type__c}"/>
+                            </apex:column>  
+
+                            <apex:column >
+                                <apex:facet name="header">
+                                    <c:SortHeader sController="{!controller}" header="Priority" column="Maintenance_Work_Order__r.Work_Order_Priority_Number__c" panel="resultPanel"/>
+                                </apex:facet>
+                                <apex:outputField value="{!rec.ActivityObject.Maintenance_Work_Order__r.Work_Order_Priority_Number__c}"/>
+                            </apex:column>  
+
+                            <apex:column >
+                                <apex:facet name="header">
+                                    <c:SortHeader sController="{!controller}" header="Work Order Status" column="Maintenance_Work_Order__r.User_Status_Code__c" panel="resultPanel"/>
+                                </apex:facet>
+                                <apex:outputField value="{!rec.ActivityObject.Maintenance_Work_Order__r.User_Status_Code__c}"/>
+                            </apex:column>                    
+
+                            <apex:column >
+                                <apex:facet name="header">
+                                    <c:SortHeader sController="{!controller}" header="Work Center" column="Work_Center__c" panel="resultPanel"/>
+                                </apex:facet>
+                                <apex:outputField value="{!rec.ActivityObject.Work_Center__c}"/>
+                            </apex:column> 
+
+                            <apex:column >
+                                <apex:facet name="header">
+                                    <c:SortHeader sController="{!controller}" header="Route" column="Maintenance_Work_Order__r.Plant_Section__c" panel="resultPanel"/>
+                                </apex:facet>
+                                <apex:outputField value="{!rec.ActivityObject.Maintenance_Work_Order__r.Plant_Section__c}"/>
+                            </apex:column>
+
+                            <apex:column >
+                                <apex:facet name="header">
+                                   <c:SortHeader sController="{!controller}" header="Location" column="Location_Name__c" panel="resultPanel"/> 
+                                </apex:facet>
+                                <apex:outputField value="{!rec.ActivityObject.Location_Name__c}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">
+                                    <c:SortHeader sController="{!controller}" header="Scheduled" column="Scheduled_Start_Date__c" panel="resultPanel"/>
+                                </apex:facet>
+                                <apex:outputField value="{!rec.ActivityObject.Scheduled_Start_Date__c}"/>
+                            </apex:column> 
+                            <apex:column rendered="{!isAdmin}">
+                                <apex:facet name="header">
+                                    <c:SortHeader sController="{!controller}" header="Vendor" column="Assigned_Vendor__c" panel="resultPanel"/>
+                                </apex:facet>
+                                <apex:outputField value="{!rec.ActivityObject.Assigned_Vendor__c}"/>
+                            </apex:column> 
+
+                            <apex:column >
+                                <apex:facet name="header">
+                                    <c:SortHeader sController="{!controller}" header="Assigned" column="Assigned_Text__c" panel="resultPanel"/>
+                                </apex:facet>
+                                <apex:outputField value="{!rec.ActivityObject.Assigned_Text__c}"/>
+                            </apex:column> 
+                            <apex:column >
+                                <apex:facet name="header">
+                                    <c:SortHeader sController="{!controller}" header="Status" column="Status__c" panel="resultPanel"/>
+                                </apex:facet>
+                                <apex:outputField value="{!rec.ActivityObject.Status__c}"/>
+                                <div style="float:bottom;">
+                                    <apex:outputField value="{!rec.ActivityObject.Status_Reason__c}"/>
+                                </div>
+                            </apex:column> 
+
+        <!--                     <apex:column >
+                                <apex:facet name="header">
+                                    <c:SortHeader sController="{!controller}" header="Status Reason" column="Status_Reason__c" panel="resultPanel"/>
+                                </apex:facet>
+                                <apex:outputField value="{!rec.ActivityObject.Status_Reason__c}"/>
+                            </apex:column>  -->
+
+                        </apex:pageBlockTable>
+                        <!-- end list view -->
+                    </apex:pageBlock>
+                </apex:outputPanel>
+            </td>     
+        </tr> 
+     </table>  
+
+    <apex:pageBlock title="Debug - SOQL" id="debug" rendered="false">
+        <apex:outputText value="{!DebugSql}" />
+    </apex:pageBlock>
+    </apex:form>
+</apex:page>

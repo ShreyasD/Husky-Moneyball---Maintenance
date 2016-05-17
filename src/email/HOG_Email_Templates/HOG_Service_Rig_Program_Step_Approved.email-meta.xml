@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email Template for notification sent after technical approval.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>HOG_Standard_Letter_Head</letterhead>
+    <name>HOG  - Service Rig Program Step Approved</name>
+    <style>formalLetter</style>
+    <subject>{!ApprovalRequest.Process_Step_Name} Granted: {!HOG_Service_Rig_Program__c.Name}</subject>
+    <textOnly>{!HOG_Service_Rig_Program__c.Name} has been {!IF(ApprovalRequest.Process_Step_Name == &apos;Technical Approval&apos;, &apos;technically&apos;, &apos;financially&apos;} approved by {!ApprovalRequest.Process_Approver}.
+
+Approval Details:
+
+Comments: {!ApprovalRequest.Comments}
+
+Status: {!ApprovalRequest.Status}
+
+Approval Date: {!ApprovalRequest.Response_Date}
+
+Submitted By: {!ApprovalRequest.Process_Assignee}
+
+Approved By: {!ApprovalRequest.Process_Approver}</textOnly>
+    <type>html</type>
+</EmailTemplate>

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Finished_New__c</fullName>
+        <description>Replacement field for the Finished__c rollup field.</description>
+        <externalId>false</externalId>
+        <label>Finished</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Finished_at_Equipment_New__c</fullName>
+        <description>Replacement field for Finished_at_Equipment__c roll-up.</description>
+        <externalId>false</externalId>
+        <label>Finished at Equipment</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Planner_Group__c</fullName>
+        <externalId>false</externalId>
+        <formula>Work_Order_Activity__r.Maintenance_Work_Order__r.Planner_Group__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Planner Group</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Route__c</fullName>
+        <externalId>false</externalId>
+        <formula>Work_Order_Activity__r.Maintenance_Work_Order__r.Operator_Route__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Route</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Started_New__c</fullName>
+        <description>Replacement field for Started__c Roll up.</description>
+        <externalId>false</externalId>
+        <label>Started</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Started_at_Equipment_New__c</fullName>
+        <description>Replacement field for Started_at_Equipment__c rollup.</description>
+        <externalId>false</externalId>
+        <label>Started at Equipment</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Time_Spent_Off_Equipment_Text__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISNULL(TravelTime_New__c), &quot;&quot;, 
+
+IF(FLOOR(TravelTime_New__c)=0, &quot;&quot;, 
+TEXT( 
+FLOOR(TravelTime_New__c) 
+) &amp;&quot; Hours &quot;) 
+
+&amp; 
+
+IF(ROUND(MOD((TravelTime_New__c)*60,60),0)=0, &quot;&quot;, 
+TEXT( 
+ROUND(MOD((TravelTime_New__c)*60,60),0) 
+) &amp;&quot; Minutes &quot;) 
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Time Spent Off Equipment</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Time_Spent_On_Equipment_Text__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISNULL(WorkTime_New__c ), &quot;&quot;, 
+
+IF(FLOOR(WorkTime_New__c)=0, &quot;&quot;, 
+TEXT( 
+FLOOR(WorkTime_New__c) 
+) &amp;&quot; Hours &quot;) 
+
+&amp; 
+
+IF(ROUND(MOD((WorkTime_New__c )*60,60),0)=0, &quot;&quot;, 
+TEXT( 
+ROUND(MOD((WorkTime_New__c )*60,60),0) 
+) &amp;&quot; Minutes &quot;) 
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Time Spent On Equipment</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Man_Hours_Text__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISNULL(WorkTime_New__c +  TravelTime_New__c  ), &quot;&quot;,
+
+IF(FLOOR(WorkTime_New__c+ TravelTime_New__c)=0, &quot;&quot;,
+TEXT(
+FLOOR(WorkTime_New__c + TravelTime_New__c)
+) &amp;&quot; Hours &quot;)
+
+&amp;
+
+IF(ROUND(MOD((WorkTime_New__c + TravelTime_New__c  )*60,60),0)=0, &quot;&quot;,
+TEXT(
+ROUND(MOD((WorkTime_New__c + TravelTime_New__c  )*60,60),0)
+) &amp;&quot; Minutes &quot;)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Man Hours</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Man_Hours__c</fullName>
+        <externalId>false</externalId>
+        <formula>(TravelTime_New__c +  WorkTime_New__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Man Hours (Hrs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tradesman__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Tradesman</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Work Order Activity Logs</relationshipLabel>
+        <relationshipName>Work_Order_Activity_Logs</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>TravelTime_New__c</fullName>
+        <description>Replacement for TravelTime__c roll up.</description>
+        <externalId>false</externalId>
+        <label>Time Spent Off Equipment (hrs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>WorkTime_New__c</fullName>
+        <externalId>false</externalId>
+        <label>Time Spent On Equipment (hrs)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Work_Center__c</fullName>
+        <externalId>false</externalId>
+        <formula>Work_Order_Activity__r.Work_Center__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Work Center</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Work_Order_Activity__c</fullName>
+        <externalId>false</externalId>
+        <label>Work Order Activity</label>
+        <referenceTo>Work_Order_Activity__c</referenceTo>
+        <relationshipLabel>Daily Logs</relationshipLabel>
+        <relationshipName>Work_Order_Activity_Logs</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>sfxId__c</fullName>
+        <caseSensitive>true</caseSensitive>
+        <externalId>true</externalId>
+        <label>sfxId</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <label>Work Order Activity Log</label>
+    <nameField>
+        <displayFormat>AL-{000000000}</displayFormat>
+        <label>Record Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Work Order Activity Logs</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

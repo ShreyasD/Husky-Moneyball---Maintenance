@@ -1,0 +1,73 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+<html>
+  <head>
+    <meta charset="utf-8"></meta>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width"></meta>
+    <title>Vendor Activity Tracking</title>
+
+    <!-- Ioninc Stuff -->
+    <link href="{!URLFOR($Resource.IonicLib, 'css/ionic.css')}" rel="stylesheet" />
+    <link href="{!URLFOR($Resource.IonicLib, 'css/style.css')}" rel="stylesheet" />
+    <!-- ionic/angularjs js -->
+    <script src="{!URLFOR($Resource.IonicLib, 'js/ionic.bundle.js')}" />
+
+    <!-- RemoteTk -->
+    <apex:includeScript value="https://code.jquery.com/jquery-1.11.3.min.js" />
+    <c:RemoteTK />
+
+    <!-- Calendar -->
+    <apex:includescript value="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.js" />
+    <apex:includescript value="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.js" />
+    <apex:stylesheet value="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.css"/>
+    <!--some styling. Modify this to fit your needs-->
+    <style>
+        #cal-options {float:left;}
+        #cal-legend { float:top;}
+        #cal-legend ul {margin:0;padding:0;list-style:none;}
+        #cal-legend ul li {margin:0;padding:5px;float:left;}
+        #cal-legend ul li span {display:block; height:16px; width:16px; margin-right:4px; float:left; border-radius:4px;}
+        #calendar {margin-top:20px;}
+        #calendar a:hover {color:#fff !important;}
+         
+        .fc-event-inner {padding:3px;}
+        .event-activitylog-err {background:red;border-color:red;}
+        .event-activitylog-complete {background:green;border-color:green;}    
+        .event-activitylog {background:#1797c0;border-color:#1797c0;}
+        .event-available {background:#56458c;border-color:#56458c;}
+        .event-scheduled {background:#cc9933;border-color:#cc9933;}
+
+        #calendar {
+            max-width: 900px;
+            max-hight: 400px;
+            margin: 0 auto;
+        }
+    </style>
+
+    <!-- Global Variable Binding -->
+    <script>
+      $User = window.$User || {};
+      $User.Id = "{!$User.Id}";
+    </script>
+
+    <!-- your app's js -->
+    <script src="{!$Resource.VTTM_ActivityTrackingDemo_App_js}" />
+    <script src="{!$Resource.VTTM_ActivityTrackingDemo_Controllers_js}" />
+    <script src="{!$Resource.VTTM_ActivityTrackingDemo_Services_js}" />
+  </head>
+  <body ng-app="ActivityTrackingApp">
+    <!--
+      The nav bar that will be updated as we navigate between views.
+    -->
+    <ion-nav-bar class="bar-stable">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+    </ion-nav-bar>
+    <!--
+      The views will be rendered in the <ion-nav-view> directive below
+      Templates are in the /templates folder (but you could also
+      have templates inline in this html file if you'd like).
+    -->
+    <ion-nav-view></ion-nav-view>
+  </body>
+</html>
+</apex:page>

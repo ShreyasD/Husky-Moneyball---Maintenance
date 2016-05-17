@@ -1,0 +1,62 @@
+<project name="Work Order Refactoring" default="test" basedir="." xmlns:sf="antlib:com.salesforce">
+
+	<property file="build.properties"/>
+	<property environment="env"/>
+	
+	<taskdef resource="net/sf/antcontrib/antlib.xml">
+      <classpath>
+        <pathelement location="./ant-contrib-1.0b2.jar"/>
+      </classpath>
+    </taskdef>
+	
+	<target name="retrieve">
+		<mkdir dir="deployPackage"/>
+		<sf:retrieve username="${sf.dev05username}" password="${sf.dev05password}" serverurl="${sf.dev05serverurl}" maxPoll="${sf.maxPoll}" retrieveTarget="deployPackage" unpackaged="Manifest/Maintenance.xml"/>
+	</target>
+
+	<target name="deployValidate">
+		<mkdir dir="deployPackage"/>
+		<sf:deploy username="${DEST_USERNAME}" password="${DEST_PASSWD}" serverurl="${DEST_URL}" deployRoot="deployPackage" rollbackOnError="true" checkonly="true" testLevel="RunSpecifiedTests">
+			<runTest>VTT_ActivityDetailTimeLogControllerXTest</runTest>
+			<runTest>VTT_ActivityListControllerTest</runTest>
+			<runTest>VTT_EmailNotificationsTest</runTest>
+			<runTest>VTT_InterfaceMonitorControllerTest</runTest>
+			<runTest>VTT_InterfaceMonitorScheduleTest</runTest>
+			<runTest>VTT_ManageAssignmentsControllerTest</runTest>
+			<runTest>VTT_TestData</runTest>
+			<runTest>VTT_TradesmanAssignmentControllerXTest</runTest>
+			<runTest>VTT_TradesmanScheduleControllerTest</runTest>
+			<runTest>VTT_UtilitiesTest</runTest>
+			<runTest>VTT_WorkFlowEngineTest</runTest>
+			<runTest>POC_VTTM_ActivityListControllerTest</runTest>
+			<runTest>DEFT_UtilitiesTest</runTest>
+			<runTest>WellLocationEquipmentHierarchyCtrlXTest</runTest>
+		</sf:deploy>
+	</target>
+	
+	<target name="deploy">
+		<mkdir dir="deployPackage"/>
+		<sf:deploy username="${DEST_USERNAME}" password="${DEST_PASSWD}" serverurl="${DEST_URL}" deployRoot="deployPackage" rollbackOnError="true"/>
+	</target>
+
+	<target name="retrieveChangeRequest1_05_11_2016">
+		<mkdir dir="changeRequest1_05_11_2016"/>
+		<sf:retrieve username="${sf.dev05username}" password="${sf.dev05password}" serverurl="${sf.dev05serverurl}" maxPoll="${sf.maxPoll}" retrieveTarget="changeRequest1_05_11_2016" unpackaged="Manifest/changeRequest1_05_11_2016.xml"/>
+	</target>
+
+	<target name="deployChangeRequest1_05_11_2016">
+		<sf:deploy username="${DEST_USERNAME}" password="${DEST_PASSWD}" serverurl="${DEST_URL}" deployRoot="changeRequest1_05_11_2016" rollbackOnError="true" testLevel="RunSpecifiedTests">
+			<runTest>VTT_ActivityListControllerTest</runTest>
+			<runTest>DEFT_UtilitiesTest</runTest>
+		</sf:deploy>
+	</target>
+
+	<target name="retrieveTestClasses">
+		<mkdir dir="testClasses"/>
+		<sf:retrieve username="${sf.dev05username}" password="${sf.dev05password}" serverurl="${sf.dev05serverurl}" maxPoll="${sf.maxPoll}" retrieveTarget="testClasses" unpackaged="Manifest/testClasses.xml"/>
+	</target>
+
+	<target name="deploytestClasses">
+		<sf:deploy username="${DEST_USERNAME}" password="${DEST_PASSWD}" serverurl="${DEST_URL}" deployRoot="testClasses" rollbackOnError="true"/>
+	</target>
+</project>

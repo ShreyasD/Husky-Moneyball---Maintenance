@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>HOG - Service Program is going to end soon.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>HOG_Standard_Letter_Head</letterhead>
+    <name>HOG - Service Program is going to end soon.</name>
+    <style>formalLetter</style>
+    <subject>New {!HOG_Rigless_Servicing_Form__c.RecordType} at {!HOG_Rigless_Servicing_Form__c.Name}</subject>
+    <textOnly>Attention,
+
+
+Please review the Service Request information listed below.
+Service Request Details
+
+Well location: {!HOG_Rigless_Servicing_Form__c.Name}
+Service Type: {!HOG_Rigless_Servicing_Form__c.RecordType}
+Average Oil Per/Day: {!HOG_Rigless_Servicing_Form__c.M3_Oil_Day__c}
+Priority Level: {!HOG_Rigless_Servicing_Form__c.Priority__c}
+Well Down Date: {!HOG_Rigless_Servicing_Form__c.Well_Down_On__c}
+
+Work Order Details:
+{!HOG_Rigless_Servicing_Form__c.Work_Details__c}
+
+Created by: {!HOG_Rigless_Servicing_Form__c.CreatedBy}
+Control Room: {!HOG_Rigless_Servicing_Form__c.Control_Centre__c}
+
+Link to Work Order: {!HOG_Rigless_Servicing_Form__c.Link}
+Key Contacts
+
+Production Engineer: {!HOG_Rigless_Servicing_Form__c.Production_Engineer2__c}
+Field Senior: {!HOG_Rigless_Servicing_Form__c.Field_Senior__c}
+
+Operators:
+{!HOG_Rigless_Servicing_Form__c.Operator_1_User__c}
+{!HOG_Rigless_Servicing_Form__c.Operator_2_User__c}
+{!HOG_Rigless_Servicing_Form__c.Operator_3_User__c}
+{!HOG_Rigless_Servicing_Form__c.Operator_4_User__c}</textOnly>
+    <type>html</type>
+</EmailTemplate>
